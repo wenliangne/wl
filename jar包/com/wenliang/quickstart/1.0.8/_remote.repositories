@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Wed Dec 18 15:19:08 CST 2019
+quickstart-1.0.8.jar>=
+quickstart-1.0.8.pom>=

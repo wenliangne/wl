@@ -1,0 +1,4 @@
+先CMD进入到jar包所在位置，运行 
+mvn install:install-file -DgroupId=com.wenliang -DartifactId=core -Dversion=1.0.8 -Dfile= core-1.0.8.jar -Dpackaging=jar 
+如果报错：[ERROR] The goal you specified requires a project to execute but there is no POM in this directory
+解决方案：将文件名换为全路径

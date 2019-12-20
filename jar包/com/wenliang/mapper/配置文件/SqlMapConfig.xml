@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 主配置文件 -->
+<configuration>
+    <!-- 配置环境 -->
+    <environments default="mysql">
+        <!-- 配置mysql的环境-->
+        <environment id="mysql">
+            <!-- 配置事务的类型-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- 配置数据源（连接池） -->
+            <dataSource type="POOLED">
+                <!-- 配置连接数据库的4个基本信息 -->
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/wenliang4?characterEncoding=UTF-8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="qew9633333"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 指定映射配置文件的位置，映射配置文件指的是每个dao独立的配置文件 -->
+    <mappers>
+        <!--使用resource为xml方式配置-->
+        <!--<mapper resource="com.wenliang.test.dao.UserDao.xml"></mapper>-->
+        <!--使用class为注解方式配置-->
+        <!--<mapper class="com.wenliang.test.dao.UserDao"/>-->
+        <package name="com.wenliang.test.dao"></package>
+    </mappers>
+</configuration>
