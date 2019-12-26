@@ -1,5 +1,7 @@
 package com.wenliang.security.authentication;
 
+import java.util.List;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,28 +19,24 @@ import com.wenliang.security.encrypt.Encrypt;
  */
 public class DefaultSecurityService implements SecurityService {
     Encrypt encrypt;
+    SecurityConfig securityConfig;
+    UserDetailsService userDetailsService;
     public DefaultSecurityService() {
         try {
-            Class<?> encryptClass = Class.forName(SecurityContext.getSecurityConfig().getProperty("security.encryptClassName"));
+            securityConfig = SecurityContext.getSecurityConfig();
+            Class<?> encryptClass = Class.forName(securityConfig.getProperty("security.encryptClassName"));
             encrypt = (Encrypt) encryptClass.newInstance();
+            Class<?> userDetailServiceClass = Class.forName(securityConfig.getProperty("security.userDetailsService"));
+            userDetailsService = (UserDetailsService) userDetailServiceClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void login(HttpServletRequest request, HttpServletResponse response){
-        SecurityConfig securityConfig = SecurityContext.getSecurityConfig();
         HttpSession session = request.getSession();
-        Class<?> userDetailServiceClass = null;
-        UserDetailsService userDetailsService = null;
         UserDetail userDetail = null;
         String username = request.getParameter(securityConfig.getProperty("security.username"));
         String password = request.getParameter(securityConfig.getProperty("security.password"));
-        try {
-            userDetailServiceClass = Class.forName(securityConfig.getProperty("security.userDetailsService"));
-            userDetailsService = (UserDetailsService) userDetailServiceClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         userDetail = userDetailsService.loadUserByUsername(username);
         try {
             if (encrypt.encrypt(password).equals(userDetail.getPassword())) {
@@ -66,7 +64,6 @@ public class DefaultSecurityService implements SecurityService {
     }
 
     public void logout(HttpServletRequest request, HttpServletResponse response) {
-        SecurityConfig securityConfig = SecurityContext.getSecurityConfig();
         HttpSession session = request.getSession();
         session.removeAttribute(securityConfig.getProperty("security.user"));
         session.removeAttribute("username");
@@ -88,19 +85,16 @@ public class DefaultSecurityService implements SecurityService {
         }
     }
 
-    public boolean isLogin(HttpServletRequest request, HttpServletResponse response) {
+    public void isLogin(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         try {
             if (session.getAttribute("username") == null ) {
                 response.getOutputStream().write("false".getBytes());
-                return false;
             } else {
                 response.getOutputStream().write("true".getBytes());
-                return true;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 
@@ -116,6 +110,57 @@ public class DefaultSecurityService implements SecurityService {
                 out.write(((String)username ).getBytes());
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void isTargetRole(HttpServletRequest request, HttpServletResponse response) {
+        String role = request.getParameter("role");
+        HttpSession session = request.getSession();
+        UserDetail userDetail = (UserDetail) session.getAttribute(securityConfig.getProperty("security.user"));
+        try {
+            ServletOutputStream out = response.getOutputStream();
+            if (userDetail == null) {
+                out.write("false".getBytes());
+                return;
+            }
+            List<String> roleList = userDetail.getRole();
+            if (roleList == null) {
+                out.write("false".getBytes());
+                return;
+            }
+            if (role != null && roleList.contains(role)) {
+                out.write("true".getBytes());
+            } else {
+                out.write("false".getBytes());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void getRoles(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        UserDetail userDetail = (UserDetail) session.getAttribute(securityConfig.getProperty("security.user"));
+
+        try {
+            ServletOutputStream out = response.getOutputStream();
+            if (userDetail == null) {
+                out.write("null".getBytes());
+                return;
+            }
+            List<String> roleList = userDetail.getRole();
+            if (roleList == null) {
+                out.write("null".getBytes());
+                return;
+            }
+            String temp = "";
+            for (int i = 0; i < roleList.size(); i++) {
+                temp += (","+roleList.get(i));
+            }
+            temp = temp.substring(1);
+            out.write(temp.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
         }

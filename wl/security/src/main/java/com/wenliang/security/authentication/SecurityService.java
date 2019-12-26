@@ -14,7 +14,11 @@ public interface SecurityService {
 
     public void logout(HttpServletRequest request, HttpServletResponse response);
 
-    public boolean isLogin(HttpServletRequest request, HttpServletResponse response);
+    public void isLogin(HttpServletRequest request, HttpServletResponse response);
+
+    public void isTargetRole(HttpServletRequest request, HttpServletResponse response);
+
+    public void getRoles(HttpServletRequest request, HttpServletResponse response);
 
     public void getUsername(HttpServletRequest request, HttpServletResponse response);
 
