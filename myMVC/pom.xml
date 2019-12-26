@@ -38,6 +38,12 @@
 
         <dependency>
             <groupId>com.wenliang</groupId>
+            <artifactId>security</artifactId>
+            <version>1.0.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.wenliang</groupId>
             <artifactId>quickstart</artifactId>
             <version>1.0.8</version>
         </dependency>

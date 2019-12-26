@@ -22,7 +22,7 @@ public interface UserDao {
     public List<User> findByEmail(User user);
 
     @Select("select * from user where username=#{username}")
-    public List<User> findByUsername(User user);
+    public User findByUsername(String username);
 
     @Select("select * from user where password=#{password}")
     public List<User> findByPassword(User user);

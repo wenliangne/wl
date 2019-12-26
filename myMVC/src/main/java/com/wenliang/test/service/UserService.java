@@ -1,7 +1,9 @@
 package com.wenliang.test.service;
 
 import com.wenliang.mapper.plugins.page.PageInfo;
+import com.wenliang.test.domain.Role;
 import com.wenliang.test.domain.User;
+import com.wenliang.test.domain.UserRole;
 
 import java.util.List;
 
@@ -18,9 +20,15 @@ public interface UserService {
 
     public User findByUsernameAndPassword2(String username, String password);
 
+    public User findByUsername(String username);
+
     public String AspectThrowing();
 
     public void trans();
 
     public void transError();
+
+    public List<UserRole> findByUserId(int userId);
+
+    public List<Role> findAllRole();
 }

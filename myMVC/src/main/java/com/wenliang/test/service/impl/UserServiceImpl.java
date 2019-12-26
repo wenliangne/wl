@@ -5,8 +5,12 @@ import com.wenliang.context.annotations.Service;
 import com.wenliang.context.annotations.Transaction;
 import com.wenliang.mapper.plugins.page.PageHelper;
 import com.wenliang.mapper.plugins.page.PageInfo;
+import com.wenliang.test.dao.RoleDao;
 import com.wenliang.test.dao.UserDao;
+import com.wenliang.test.dao.UserRoleDao;
+import com.wenliang.test.domain.Role;
 import com.wenliang.test.domain.User;
+import com.wenliang.test.domain.UserRole;
 import com.wenliang.test.service.UserService;
 
 import java.util.List;
@@ -23,6 +27,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    UserRoleDao userRoleDao;
+
+    @Autowired
+    RoleDao roleDao;
+
     @Override
     public List<User> findAll() {
         return userDao.findAll();
@@ -38,6 +48,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsernameAndPassword2(String username, String password) {
         return userDao.findByUsernameAndPassword2(username,password);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userDao.findByUsername(username);
     }
 
     @Override
@@ -67,5 +82,15 @@ public class UserServiceImpl implements UserService {
         userDao.update(jly);
         int i = 1 / 0;
         userDao.update(wl);
+    }
+
+    @Override
+    public List<UserRole> findByUserId(int userId) {
+        return userRoleDao.findByUserId(userId);
+    }
+
+    @Override
+    public List<Role> findAllRole() {
+        return roleDao.findALl();
     }
 }
