@@ -239,8 +239,8 @@ public class XMLConfigBuilder {
         //3.遍历Method数组
         for(Method method : methods){
             //取出每一个方法，判断是否有select注解
-                Mapper mapper = processAnnotation(method);
-                //取出注解的value属性值
+            Mapper mapper = processAnnotation(method);
+            //取出注解的value属性值
             if (mapper != null) {
                 //获取当前方法的返回值，还要求必须带有泛型信息
                 Type type = method.getGenericReturnType();//List<User>}

@@ -64,7 +64,7 @@ public class ViewHandler implements Handler {
                 return false;
             }
             FileInputStream in = new FileInputStream(file);
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[1024*10];
             int len = -1;
             while ((len = in.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, len);

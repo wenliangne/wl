@@ -1,6 +1,8 @@
 package com.wenliang.quickstart.application;
 
 
+import java.util.Properties;
+
 import com.wenliang.quickstart.tomcat.TomcatRunner;
 
 /**
@@ -13,7 +15,6 @@ public class ApplicationRunner {
      * 启动tomcat
      */
     public static void runTomcat() {
-        TomcatRunner.getProperties().put("tomcat.allContextListenerClassName","");
         TomcatRunner.run();
     }
 
@@ -21,7 +22,12 @@ public class ApplicationRunner {
      * 启动整个应用
      */
     public static void runTomcatAndApplication() {
-        TomcatRunner.getProperties().put("tomcat.allContextListenerClassName","com.wenliang.context.listener.ContextListener");
+        String listenerClassName = TomcatRunner.getProperties().getProperty("tomcat.listenerClassName");
+        if ("".equals(listenerClassName)) {
+            TomcatRunner.getProperties().put("tomcat.listenerClassName", "com.wenliang.context.listener.ContextListener");
+        } else {
+            TomcatRunner.getProperties().put("tomcat.listenerClassName", listenerClassName+",com.wenliang.context.listener.ContextListener");
+        }
         TomcatRunner.run();
     }
 

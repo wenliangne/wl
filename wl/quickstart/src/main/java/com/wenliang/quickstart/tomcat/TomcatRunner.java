@@ -11,6 +11,8 @@ import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.Wrapper;
 import org.apache.catalina.core.StandardContext;
+import org.apache.catalina.deploy.FilterDef;
+import org.apache.catalina.deploy.FilterMap;
 import org.apache.catalina.startup.Tomcat;
 
 /**
@@ -26,9 +28,9 @@ public class TomcatRunner {
 
     static {
         try {
-            properties.load(Resources.getResourceAsStream("default.properties"));
+            properties.load(Resources.getResourceAsStream("quickStartDefault.properties"));
         } catch (IOException e) {
-            Log.ERROR("加载文件:default.properties失败！", e);
+            Log.ERROR("加载文件:quickStartDefault.properties失败！", e);
         }
         try {
             properties.load(Resources.getResourceAsStream("application.properties"));
@@ -84,7 +86,9 @@ public class TomcatRunner {
         // 将context加入tomcat
         tomcat.getHost().addChild(context);
         // 添加监听器
-        addContextListener(context);
+        addListener(context);
+        //添加过滤器
+        addFilter(context);
         // 执行扩展任务，需要实现TomcatExtension接口，并配置extensionClassName参数
         extension(tomcat,context);
         // 添加处理jsp的servlet
@@ -159,18 +163,58 @@ public class TomcatRunner {
      * 加入应用监听器用于启动项目
      * @param context
      */
-    private static void addContextListener(StandardContext context) {
-        Class<?> applicationListener;
-        String allContextListenerClassName = getProperty("tomcat.allContextListenerClassName");
-        if ("".equals(allContextListenerClassName)) {
+    private static void addListener(StandardContext context) {
+        String listenerClassName = getProperty("tomcat.listenerClassName");
+        if ("".equals(listenerClassName)) {
             return;
+        } else {
+            String[] listenerClassNameArr = listenerClassName.split(",");
+            for (int i = 0; i < listenerClassNameArr.length; i++) {
+                if ("".equals(listenerClassNameArr[i])) {
+                    continue;
+                }
+                try {
+                    Class<?> applicationListener = Class.forName(listenerClassNameArr[i]);
+                    context.addApplicationLifecycleListener(applicationListener.newInstance());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        try {
-            applicationListener = Class.forName(allContextListenerClassName);
-            context.addApplicationLifecycleListener(applicationListener.newInstance());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e.getCause());
+    }
+
+    /**
+     * 添加过滤器
+     * @param context
+     */
+    private static void addFilter(StandardContext context) {
+        String filterClassName = getProperty("tomcat.filterClassName");
+        if ("".equals(filterClassName)) {
+            return;
+        } else {
+            String[] filterClassNameArr = filterClassName.split(",");
+            for (int i = 0; i < filterClassNameArr.length; i++) {
+                if ("".equals(filterClassNameArr[i])) {
+                    continue;
+                }
+                try {
+                    int index = filterClassNameArr[i].indexOf(':');
+                    String className = filterClassNameArr[i].substring(0, index);
+                    String path = filterClassNameArr[i].substring(index+1);
+
+                    FilterDef filterDef = new FilterDef();
+                    filterDef.setFilterName(className);
+                    filterDef.setFilterClass(className);
+                    context.addFilterDef(filterDef);
+
+                    FilterMap filterMap = new FilterMap();
+                    filterMap.setFilterName(className);
+                    filterMap.addURLPattern(path);
+                    context.addFilterMap(filterMap);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

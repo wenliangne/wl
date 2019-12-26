@@ -8,6 +8,8 @@
     <file url="file://$PROJECT_DIR$/core/src/main/java/com/wenliang/core/asm/v5/DefaultMethodVisitor.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/core/src/main/java/com/wenliang/core/asm/v5/MethodParameterNamesScanner.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/mapper" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/quickstart" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/security" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
