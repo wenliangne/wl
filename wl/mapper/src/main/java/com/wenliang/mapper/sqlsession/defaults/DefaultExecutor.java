@@ -1,6 +1,7 @@
 package com.wenliang.mapper.sqlsession.defaults;
 
 import com.wenliang.core.log.Log;
+import com.wenliang.core.util.StringUtils;
 import com.wenliang.mapper.cfg.Mapper;
 import com.wenliang.mapper.plugins.TransactionManager;
 import com.wenliang.mapper.plugins.page.PageHelper;
@@ -253,7 +254,7 @@ public class DefaultExecutor implements Executor {
                     // 3.获取结果集名为columnName的值
                     Object columnValue = rs.getObject(columnName);
                     // 4.创建属性描述器
-                    PropertyDescriptor pd = new PropertyDescriptor(columnName, domainClass);
+                    PropertyDescriptor pd = new PropertyDescriptor(StringUtils.ConvertUnderscoreToUppercase(columnName), domainClass);
                     // 5.获取类的写方法
                     Method writeMethod = pd.getWriteMethod();
                     // 6.执行对象的写方法

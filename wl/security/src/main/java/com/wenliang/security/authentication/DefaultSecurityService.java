@@ -44,14 +44,12 @@ public class DefaultSecurityService implements SecurityService {
                 session.setAttribute("username", userDetail.getUsername());
                 String storyPageName = (String)session.getAttribute("storyPageName");
                 String loginSuccess = securityConfig.getProperty("security.loginSuccess");
-                if ("".equals(loginSuccess)) {
-                    if (storyPageName == null || "".equals(storyPageName)) {
-                        response.getOutputStream().write(PageGenerator.getDefaultLoginSuccessPage().getBytes());
-                    } else {
-                        response.sendRedirect(storyPageName);
-                    }
-                } else {
+                if (!"".equals(loginSuccess)) {
                     response.sendRedirect(request.getContextPath()+loginSuccess);
+                } else if (storyPageName != null && !"".equals(storyPageName)) {
+                    response.sendRedirect(storyPageName);
+                } else {
+                    response.getOutputStream().write(PageGenerator.getDefaultLoginSuccessPage().getBytes());
                 }
             } else {
                 response.setStatus(200);
@@ -70,15 +68,12 @@ public class DefaultSecurityService implements SecurityService {
         String storyPageName = (String)session.getAttribute("storyPageName");
         String logoutSuccess = securityConfig.getProperty("security.logoutSuccess");
         try {
-            if ("".equals(logoutSuccess)) {
-                if (storyPageName == null || "".equals(storyPageName)) {
-                    response.getOutputStream().write(PageGenerator.getDefaultLogoutPage().getBytes());
-                } else {
-                    response.sendRedirect(storyPageName);
-                }
-                response.getOutputStream().write("注销成功！".getBytes());
+            if (!"".equals(logoutSuccess)) {
+                response.sendRedirect(request.getContextPath()+logoutSuccess);
+            } else if (storyPageName != null && !"".equals(storyPageName)) {
+                response.sendRedirect(storyPageName);
             } else {
-                response.sendRedirect(request.getContextPath() + logoutSuccess);
+                response.getOutputStream().write(PageGenerator.getDefaultLogoutPage().getBytes());
             }
         } catch (Exception e) {
             e.printStackTrace();

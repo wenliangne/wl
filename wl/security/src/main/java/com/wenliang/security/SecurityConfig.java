@@ -29,7 +29,7 @@ public class SecurityConfig {
             properties.load(in);
             Log.INFO("加载文件application.properties完成！");
         } catch (Exception e) {
-            Log.ERROR("加载文件application.properties失败！");
+            Log.WARN("加载文件application.properties失败！");
         }
     }
 

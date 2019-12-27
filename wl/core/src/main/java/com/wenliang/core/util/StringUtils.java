@@ -42,8 +42,7 @@ public class StringUtils {
     public static String convertValueToSymbol(String value, String conversionSymbolStart, String conversionSymbolEnd, Properties properties) {
         int start = -1;
         int end = -1;
-        while ((start = value.indexOf(conversionSymbolStart)) != -1) {
-            end = value.indexOf(conversionSymbolEnd);
+        while ((start = value.indexOf(conversionSymbolStart)) != -1 &&( end = value.indexOf(conversionSymbolEnd)) != -1 ) {
             String temp = value.substring(start, end + 1);
             String proName = temp.replace(conversionSymbolStart, "").replace(conversionSymbolEnd, "");
             String proValue = properties.getProperty(proName);
@@ -90,7 +89,30 @@ public class StringUtils {
         return value;
     }
 
-
+    /**
+     * 将字符串的下划线去掉并将下划线后面的一个字母转换为大写
+     * @param fieldName
+     * @return
+     */
+    public static String ConvertUnderscoreToUppercase(String fieldName) {
+        int startIndex;
+        String tempFieldName=fieldName;
+        try {
+            while ((startIndex = tempFieldName.indexOf('_')) > -1) {
+                tempFieldName = tempFieldName.replaceFirst("_", "");
+                if (tempFieldName.length() > startIndex+1) {
+                    tempFieldName = tempFieldName.substring(0, startIndex) + tempFieldName.substring(startIndex, startIndex + 1).toUpperCase() + tempFieldName.substring(startIndex + 1);
+                } else if (tempFieldName.length() == startIndex + 1) {
+                    tempFieldName = tempFieldName.substring(0, startIndex) + tempFieldName.substring(startIndex, startIndex + 1).toUpperCase();
+                } else {
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            Log.ERROR("转换字符串失败:"+fieldName, e);
+        }
+        return tempFieldName;
+    }
 
 
 }

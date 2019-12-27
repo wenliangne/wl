@@ -15,13 +15,6 @@
         <module name="wl" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.8">
-      <module name="context" target="1.8" />
-      <module name="controller" target="1.8" />
-      <module name="core" target="1.8" />
-      <module name="mapper" target="1.8" />
-      <module name="quickstart" target="1.5" />
-      <module name="security" target="1.5" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.8" />
   </component>
 </project>

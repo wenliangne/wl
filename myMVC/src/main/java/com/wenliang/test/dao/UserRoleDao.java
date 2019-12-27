@@ -11,6 +11,6 @@ import com.wenliang.test.domain.UserRole;
  * 简介：
  */
 public interface UserRoleDao {
-    @Select("select * from user_role where userId=#{userId}")
+    @Select("select * from user_role where user_id=#{userId}")
     public List<UserRole> findByUserId(int userId);
 }

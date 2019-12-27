@@ -44,7 +44,7 @@ public class UserDetailServiceImpl  implements UserDetailsService{
         List<UserRole> userRoleList = userService.findByUserId(user.getId());
         ArrayList<String> roleStringList = new ArrayList<>();
         for (int i = 0; i < userRoleList.size(); i++) {
-            roleStringList.add("role_"+roleMap.get(String.valueOf(userRoleList.get(i).getRoleid())));
+            roleStringList.add("role_"+roleMap.get(String.valueOf(userRoleList.get(i).getRoleId())));
         }
         userDetail.setRole(roleStringList);
         return userDetail;

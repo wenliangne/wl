@@ -1,4 +1,4 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Fri Dec 27 10:43:38 CST 2019
-mapper-1.0.8.jar>=
-mapper-1.0.8.pom>=
+#Fri Dec 27 11:51:26 CST 2019
+security-1.0.8.pom>=
+security-1.0.8.jar>=

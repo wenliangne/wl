@@ -9,6 +9,7 @@ import com.wenliang.core.io.Resources;
 import com.wenliang.core.javassist.MethodParameterNamesScannerForJavassist;
 import com.wenliang.core.log.Log;
 import com.wenliang.core.util.MethodUtils;
+import com.wenliang.core.util.StringUtils;
 import com.wenliang.mapper.sqlsession.SqlSession;
 import com.wenliang.mapper.sqlsession.SqlSessionFactory;
 
@@ -33,13 +34,12 @@ import java.util.*;
 public class Test {
 
     public static void main(String[] args) throws NoSuchMethodException, ClassNotFoundException {
-//        testSelect();
-//        testCglibProxy();
-//        testAspectMather();
-//        new LocalVariableTableParameterNameDiscoverer();
-//        testJavassist();
-//        testAsm();
-        testJavassist2();
+        Properties p = new Properties();
+        p.setProperty("name", "wenliang");
+        p.setProperty("password", "123456");
+        String str = "qwe#{name}qw#{password}er";
+        String s = StringUtils.convertValueToSymbol(str, "#{", "}", p);
+        System.out.println(s);
     }
 
 

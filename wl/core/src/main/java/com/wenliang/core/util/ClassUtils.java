@@ -2,6 +2,7 @@ package com.wenliang.core.util;
 
 import com.wenliang.core.container.DefaultBeanNameMap;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -13,6 +14,30 @@ public class ClassUtils {
     private ClassUtils() {
     }
 
+    /**
+     * 判断是否为复杂对象（及基本数据类型及字符串以外的对象）
+     * @param parameterType
+     * @return
+     */
+    private boolean isComplexObject(Class<?> parameterType) {
+        if (byte.class.isAssignableFrom(parameterType) || Byte.class.isAssignableFrom(parameterType)
+                ||int.class.isAssignableFrom(parameterType) || Integer.class.isAssignableFrom(parameterType)
+                ||float.class.isAssignableFrom(parameterType) || Float.class.isAssignableFrom(parameterType)
+                ||double.class.isAssignableFrom(parameterType) || Double.class.isAssignableFrom(parameterType)
+                ||long.class.isAssignableFrom(parameterType) || Long.class.isAssignableFrom(parameterType)
+                ||String.class.isAssignableFrom(parameterType)|| Date.class.isAssignableFrom(parameterType)
+                ) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * 判断是否为数字和字符串
+     * @param aClass
+     * @return
+     */
     public static boolean isStringAndNumber(Class<?> aClass) {
         if (int.class.isAssignableFrom(aClass) || Integer.class.isAssignableFrom(aClass)) {
             return true;
