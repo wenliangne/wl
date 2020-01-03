@@ -5,6 +5,7 @@ import com.wenliang.mapper.cfg.Mapper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 
 /**
@@ -23,5 +24,5 @@ public interface Executor {
 
     public <E> int delete(Mapper mapper, Connection conn);
 
-    public void release(PreparedStatement pstm, ResultSet rs);
+    public void release(Connection conn, Statement pstm, ResultSet rs);
 }

@@ -1,6 +1,7 @@
 package com.wenliang.mapper.sqlsession.defaults;
 
 import com.wenliang.core.log.Log;
+import com.wenliang.core.util.EntityUtils;
 import com.wenliang.core.util.StringUtils;
 import com.wenliang.mapper.cfg.Mapper;
 import com.wenliang.mapper.plugins.TransactionManager;
@@ -14,6 +15,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 
@@ -26,10 +29,14 @@ public class DefaultExecutor implements Executor {
     public <E> List<E> selectList(Mapper mapper, Connection conn) {
         PreparedStatement psmt = null;
         ResultSet rs = null;
+        PreparedStatement psmtCount = null;
+        ResultSet resultSet = null;
         int curSize=0;
+        boolean transactionManagerFlag = false;
         Connection connection = TransactionManager.localConnection.get();
-        if (conn != null) {
+        if (connection != null) {
             conn = connection;
+            transactionManagerFlag = true;
         }
         try {
             // 1.取出mapper中的数据
@@ -63,20 +70,12 @@ public class DefaultExecutor implements Executor {
                 Log.ERROR("Operation type: selectList    "+"result Exception",e);
             }
             // 7.封装结果集
-            List<E> list = new ArrayList<E>();//定义返回值
-            while(rs.next()) {
-                // 7.1实例化要封装的实体类对象
-                E domain = (E)domainClass.newInstance();
-                // 7.2将rs中的数据赋值到对象中
-                rsToDomain(rs, domain, domainClass);
-                // 7.3把赋好值的对象加入到集合中
-                list.add(domain);
-            }
+            List<E> list = EntityUtils.rsToEntityList(rs, domainClass);//定义返回值
             //分页插件处理
             if (pageInfo != null) {
                 String sqlCount = geneSqlToQueryCount(mapper.getSqlString());
-                PreparedStatement psmtCount = conn.prepareStatement(sqlCount);
-                ResultSet resultSet = psmtCount.executeQuery();
+                psmtCount = conn.prepareStatement(sqlCount);
+                resultSet = psmtCount.executeQuery();
                 resultSet.next();
                 int count = resultSet.getInt(1);
                 pageInfo.setTotal(count);
@@ -88,7 +87,12 @@ public class DefaultExecutor implements Executor {
             throw new RuntimeException(e);
         } finally {
             // 8.释放资源
-            release(psmt,rs);
+            release(null,psmt,rs);
+            if (transactionManagerFlag) {
+                release(null, psmtCount, resultSet);
+            } else {
+                release(conn,psmtCount,resultSet);
+            }
         }
     }
 
@@ -96,9 +100,11 @@ public class DefaultExecutor implements Executor {
     public <E> E select(Mapper mapper, Connection conn) {
         PreparedStatement psmt = null;
         ResultSet rs = null;
+        boolean transactionManagerFlag = false;
         Connection connection = TransactionManager.localConnection.get();
-        if (conn != null) {
+        if (connection != null) {
             conn = connection;
+            transactionManagerFlag = true;
         }
         try {
             // 1.取出mapper中的数据
@@ -125,25 +131,29 @@ public class DefaultExecutor implements Executor {
             }
             // 7.封装结果集
             // 7.1实例化要封装的实体类对象
-            Object domain = domainClass.newInstance();
             rs.next();
-            // 7.2将rs中的数据赋值到对象中
-            rsToDomain(rs, domain, domainClass);
+            Object domain = EntityUtils.rsToEntity(rs, domainClass);
             return (E)domain;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }finally {
             // 8.释放资源
-            release(psmt,rs);
+            if (transactionManagerFlag) {
+                release(null, psmt, rs);
+            } else {
+                release(conn,psmt,rs);
+            }
         }
     }
 
     @Override
     public boolean insert(Mapper mapper, Connection conn) {
         PreparedStatement psmt = null;
+        boolean transactionManagerFlag = false;
         Connection connection = TransactionManager.localConnection.get();
-        if (conn != null) {
+        if (connection != null) {
             conn = connection;
+            transactionManagerFlag = true;
         }
         try {
             String insertString = mapper.getSqlString();
@@ -158,7 +168,11 @@ public class DefaultExecutor implements Executor {
             Log.ERROR("Operation type: insert    "+"result: false",e);
             throw new RuntimeException(e);
         } finally {
-            release(psmt,null);
+            if (transactionManagerFlag) {
+                release(null,psmt,null);
+            } else {
+                release(conn,psmt,null);
+            }
         }
         return true;
     }
@@ -167,9 +181,11 @@ public class DefaultExecutor implements Executor {
     public int update(Mapper mapper, Connection conn) {
         PreparedStatement psmt = null;
         int rowsAffected;
+        boolean transactionManagerFlag = false;
         Connection connection = TransactionManager.localConnection.get();
-        if (conn != null) {
+        if (connection != null) {
             conn = connection;
+            transactionManagerFlag = true;
         }
         try {
             String updateString = mapper.getSqlString();
@@ -184,7 +200,11 @@ public class DefaultExecutor implements Executor {
             Log.ERROR("Operation type: update    "+"result: false",e);
             throw new RuntimeException(e);
         } finally {
-            release(psmt,null);
+            if (transactionManagerFlag) {
+                release(null, psmt, null);
+            } else {
+                release(conn,psmt,null);
+            }
         }
         return rowsAffected;
     }
@@ -193,9 +213,11 @@ public class DefaultExecutor implements Executor {
     public int delete(Mapper mapper, Connection conn) {
         PreparedStatement psmt = null;
         int rowsAffected;
+        boolean transactionManagerFlag = false;
         Connection connection = TransactionManager.localConnection.get();
-        if (conn != null) {
+        if (connection != null) {
             conn = connection;
+            transactionManagerFlag = true;
         }
         try {
             String deleteString = mapper.getSqlString();
@@ -210,7 +232,11 @@ public class DefaultExecutor implements Executor {
             Log.ERROR("Operation type: delete    "+"result: false",e);
             throw new RuntimeException(e);
         } finally {
-            release(psmt,null);
+            if (transactionManagerFlag) {
+                release(null, psmt, null);
+            } else {
+                release(conn,psmt,null);
+            }
         }
         return rowsAffected;
     }
@@ -220,54 +246,29 @@ public class DefaultExecutor implements Executor {
      * @param pstm
      * @param rs
      */
-    public void release(PreparedStatement pstm, ResultSet rs) {
+    public void release(Connection conn, Statement pstm, ResultSet rs) {
         if(rs != null){
             try {
                 rs.close();
             }catch(Exception e){
-                e.printStackTrace();
+                Log.ERROR("关闭ResultSet失败！",e);
             }
         }
         if(pstm != null){
             try {
                 pstm.close();
             }catch(Exception e){
-                e.printStackTrace();
+                Log.ERROR("关闭Statement失败！",e);
+            }
+        }
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                Log.ERROR("关闭Connection失败！",e);
             }
         }
     }
-
-    /**
-     * 将结果集封装为对象
-     * @param rs
-     * @param domain
-     * @param domainClass
-     */
-    private void rsToDomain(ResultSet rs,Object domain,Class domainClass) {
-        try {
-            // 1.获取结果集元数据
-            ResultSetMetaData metaData = rs.getMetaData();
-            for (int i = 1; i <= metaData.getColumnCount(); i++) {
-                try {
-                    // 2.获取结果集第i列的列名
-                    String columnName = metaData.getColumnName(i);
-                    // 3.获取结果集名为columnName的值
-                    Object columnValue = rs.getObject(columnName);
-                    // 4.创建属性描述器
-                    PropertyDescriptor pd = new PropertyDescriptor(StringUtils.ConvertUnderscoreToUppercase(columnName), domainClass);
-                    // 5.获取类的写方法
-                    Method writeMethod = pd.getWriteMethod();
-                    // 6.执行对象的写方法
-                    writeMethod.invoke(domain, columnValue);
-                } catch (Exception e) {
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
     /**
      * 为PreparedStatement对象添加参数
      * @param psmt
@@ -378,6 +379,8 @@ public class DefaultExecutor implements Executor {
         String end = sql.substring(sql.toUpperCase().indexOf("FROM"));
         return "select count("+center+")"+end;
     }
+
+
 
 
 

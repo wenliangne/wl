@@ -4,8 +4,9 @@ import com.wenliang.context.annotations.*;
 import com.wenliang.context.cfg.DefaultBeanApplicationContext;
 import com.wenliang.context.proxy.ExecutorCommonAspect;
 import com.wenliang.core.log.Log;
+import com.wenliang.core.util.ClassUtils;
+
 import org.dom4j.Element;
-import org.reflections.Reflections;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -31,8 +32,7 @@ public class AspectScanner {
     }
 
     private void loadAspectToAnnotation(String[] packageNames) {
-        Reflections r = new Reflections(packageNames);
-        Set<Class<?>> classForAspect = r.getTypesAnnotatedWith(Aspect.class);
+        Set<Class<?>> classForAspect = ClassUtils.getClassWithAnnotation(packageNames,Aspect.class);
         if (classForAspect != null) {
             for (Class<?> aClass : classForAspect) {
                 Method[] declaredMethods = aClass.getDeclaredMethods();

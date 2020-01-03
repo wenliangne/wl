@@ -54,7 +54,7 @@ public class DefaultSqlSession implements SqlSession {
             return o;
         } else {
             o = (T) Proxy.newProxyInstance(daoInterfaceClass.getClassLoader(),
-                    new Class[]{daoInterfaceClass}, new MapperProxy(cfg.getMappers(),getConnection() ));
+                    new Class[]{daoInterfaceClass}, new MapperProxy(cfg.getMappers(),getDs() ));
             DefaultRepositoryApplicationContext.put(StringUtils.convertFirstCharToLowerCase(daoInterfaceClass.getSimpleName()), o);
             return o;
         }

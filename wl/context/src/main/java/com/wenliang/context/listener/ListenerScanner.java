@@ -5,8 +5,9 @@ import com.wenliang.context.cfg.ContextListenerBean;
 import com.wenliang.context.cfg.DefaultBeanApplicationContext;
 import com.wenliang.context.listener.interfaces.ListenerInterface;
 import com.wenliang.core.log.Log;
+import com.wenliang.core.util.ClassUtils;
+
 import org.dom4j.Element;
-import org.reflections.Reflections;
 
 import java.util.List;
 import java.util.Set;
@@ -54,8 +55,7 @@ public class ListenerScanner {
         }
     }
     private void loadListenerToAnnotation(String[] packageNames) {
-        Reflections r = new Reflections(packageNames);
-        Set<Class<?>> ls = r.getTypesAnnotatedWith(ContextListener.class);
+        Set<Class<?>> ls = ClassUtils.getClassWithAnnotation(packageNames,ContextListener.class);
         if (ls == null) {
             return;
         }

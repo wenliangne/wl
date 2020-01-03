@@ -5,8 +5,8 @@ import com.wenliang.controller.annotation.RequestMapping;
 import com.wenliang.controller.cfg.URLBuilder;
 import com.wenliang.controller.group.ExecutorBean;
 import com.wenliang.core.log.Log;
+import com.wenliang.core.util.ClassUtils;
 import com.wenliang.core.util.StringUtils;
-import org.reflections.Reflections;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,8 +31,7 @@ public class DefaultURLBuilder implements URLBuilder {
         String[] packageArr = packageNames.replace("[", "").replace("]", "").split(",");
         for (String packageName : packageArr) {
             try {
-                Reflections r = new Reflections(packageName.trim());
-                Set<Class<?>> controllerList = r.getTypesAnnotatedWith(Controller.class);
+                Set<Class<?>> controllerList = ClassUtils.getClassWithAnnotation(packageName,Controller.class);
                 for (Class<?> aClass : controllerList) {
                     Object o = aClass.newInstance();
                     Method[] methods = aClass.getDeclaredMethods();

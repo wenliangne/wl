@@ -15,19 +15,21 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 /**
  * @author wenliang
  * @date 2019-06-25
  * 简介：maper的代理对象
  */
 public class MapperProxy implements InvocationHandler {
-
+    DefaultExecutor defaultExecutor = new DefaultExecutor();
     private Map<String,Mapper> mappers;
-    private Connection conn;
+    private DataSource dataSource;
 
-    public MapperProxy(Map<String,Mapper> mappers,Connection conn){
+    public MapperProxy(Map<String,Mapper> mappers,DataSource ds){
         this.mappers = mappers;
-        this.conn = conn;
+        this.dataSource = ds;
     }
 
     public  Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -49,30 +51,21 @@ public class MapperProxy implements InvocationHandler {
             throw new IllegalArgumentException("传入的参数有误！");
         }
         mapper.getLocalArgs().set(args);
-        DefaultExecutor defaultExecutor = new DefaultExecutor();
         Class annotation = mapper.getAnnotation();
         if (Select.class.isAssignableFrom(annotation)) {
             if (List.class.isAssignableFrom(method.getReturnType())) {
-                return defaultExecutor.selectList(mapper, conn);
+                return defaultExecutor.selectList(mapper, dataSource.getConnection());
             } else {
-                return defaultExecutor.select(mapper, conn);
+                return defaultExecutor.select(mapper, dataSource.getConnection());
             }
         } else if (Update.class.isAssignableFrom(annotation)) {
-            return defaultExecutor.update(mapper, conn);
+            return defaultExecutor.update(mapper, dataSource.getConnection());
         } else if (Delete.class.isAssignableFrom(annotation)) {
-            return defaultExecutor.delete(mapper, conn);
+            return defaultExecutor.delete(mapper, dataSource.getConnection());
         } else if (Insert.class.isAssignableFrom(annotation)) {
-            return defaultExecutor.insert(mapper, conn);
+            return defaultExecutor.insert(mapper, dataSource.getConnection());
         }
         return null;
     }
 
-    public void close() {
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            Log.ERROR("关闭连接失败！",e);
-        }
-
-    }
 }

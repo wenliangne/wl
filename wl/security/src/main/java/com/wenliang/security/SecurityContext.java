@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.wenliang.security.authentication.DefaultSecurityService;
+import com.wenliang.security.authentication.SecurityService;
 import com.wenliang.security.macher.MatchUrlHandler;
 
 /**
@@ -14,7 +15,7 @@ import com.wenliang.security.macher.MatchUrlHandler;
 public class SecurityContext {
     private static SecurityConfig securityConfig=new SecurityConfig();
     private static Map<String,MatchUrlHandler> matchUrlHandlerMap = new HashMap();
-    private static DefaultSecurityService defaultSecurityService = new DefaultSecurityService();
+    private static SecurityService securityService = new DefaultSecurityService();
 
 
     public static SecurityConfig getSecurityConfig() {
@@ -33,11 +34,11 @@ public class SecurityContext {
         SecurityContext.matchUrlHandlerMap = matchUrlHandlerMap;
     }
 
-    public static DefaultSecurityService getDefaultSecurityService() {
-        return defaultSecurityService;
+    public static SecurityService getSecurityService() {
+        return securityService;
     }
 
-    public static void setDefaultSecurityService(DefaultSecurityService defaultSecurityService) {
-        SecurityContext.defaultSecurityService = defaultSecurityService;
+    public static void setSecurityService(SecurityService securityService) {
+        SecurityContext.securityService = securityService;
     }
 }

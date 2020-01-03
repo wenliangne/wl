@@ -1,9 +1,15 @@
 package com.wenliang.core.util;
 
 import com.wenliang.core.container.DefaultBeanNameMap;
+import com.wenliang.core.log.Log;
 
+import java.io.File;
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author wenliang
@@ -75,5 +81,43 @@ public class ClassUtils {
             putValueToIntefaceAndSuper(superclass, value);
         }
 
+    }
+
+    public static Set<Class<?>> getClassFromPackage(String packageName) {
+        Set<Class<?>> classSet = new HashSet<>();
+        File file = new File((ClassUtils.class.getResource("/").getPath() + packageName).replace(".", "/"));
+        String basePath = file.getAbsolutePath().replace(packageName.replace(".","\\"),"");
+        int baseLen = "".equals(packageName)?basePath.length()+1:basePath.length();
+        List<String> fileAbsoluteNameList = FileUtils.getFileAbsoluteNameList(file, ".class");
+        for (String fileAbsoluteName : fileAbsoluteNameList) {
+            String className = fileAbsoluteName.substring(baseLen, fileAbsoluteName.length() - 6).replace("\\", ".");
+            Class<?> aClass = null;
+            try {
+                aClass = Class.forName(className);
+                classSet.add(aClass);
+            } catch (Exception e) {
+                Log.WARN("类加载失败："+className);
+            }
+        }
+        return classSet;
+    }
+
+    public static Set<Class<?>> getClassWithAnnotation(String packageName, Class<? extends Annotation> annotation) {
+        Set<Class<?>> classSet = new HashSet<>();
+        Set<Class<?>> classFromPackage = getClassFromPackage(packageName);
+        for (Class<?> aClass : classFromPackage) {
+            if (aClass.getAnnotation(annotation) != null) {
+                classSet.add(aClass);
+            }
+        }
+        return classSet;
+    }
+    public static Set<Class<?>> getClassWithAnnotation(String[] packageNames, Class<? extends Annotation> annotation) {
+        Set<Class<?>> classSet = new HashSet<>();
+        for (int i = 0; i < packageNames.length; i++) {
+            Set<Class<?>> classWithAnnotation = getClassWithAnnotation(packageNames[i], annotation);
+            classSet.addAll(classWithAnnotation);
+        }
+        return classSet;
     }
 }

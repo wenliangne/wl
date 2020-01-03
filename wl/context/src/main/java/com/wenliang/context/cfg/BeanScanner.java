@@ -6,7 +6,6 @@ import com.wenliang.core.log.Log;
 import com.wenliang.core.util.ClassUtils;
 import com.wenliang.core.util.StringUtils;
 import org.dom4j.Element;
-import org.reflections.Reflections;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -83,11 +82,10 @@ public class BeanScanner {
      * @param  packageNames
      */
     private void loadBeanAnnotation(String[] packageNames) {
-            Reflections rt = new Reflections(packageNames);
-            Set<Class<?>> components = rt.getTypesAnnotatedWith(Component.class);
-            Set<Class<?>> controllers = rt.getTypesAnnotatedWith(Controller.class);
-            Set<Class<?>> services = rt.getTypesAnnotatedWith(Service.class);
-            Set<Class<?>> repositorys = rt.getTypesAnnotatedWith(Repository.class);
+            Set<Class<?>> components = ClassUtils.getClassWithAnnotation(packageNames,Component.class);
+            Set<Class<?>> controllers = ClassUtils.getClassWithAnnotation(packageNames,Controller.class);
+            Set<Class<?>> services = ClassUtils.getClassWithAnnotation(packageNames,Service.class);
+            Set<Class<?>> repositorys = ClassUtils.getClassWithAnnotation(packageNames,Repository.class);
             geneBeanToConfiguration(controllers);
             geneBeanToConfiguration(components);
             geneBeanToConfiguration(services);

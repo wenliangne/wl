@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.wenliang.core.util.ClassUtils;
 import com.wenliang.core.util.StringUtils;
 
-import org.reflections.Reflections;
 
 /**
  * @author wenliang
@@ -18,13 +18,7 @@ public class ServletScanner {
     private String classPath;
     public List<ServletConfig> scan() {
         ArrayList<ServletConfig> servletConfigArrayList = new ArrayList<ServletConfig>();
-        Reflections r;
-        if ("".equals(classPath)) {
-            r = new Reflections();
-        } else {
-            r = new Reflections(classPath);
-        }
-        Set<Class<?>> servletSet = r.getTypesAnnotatedWith(Servlet.class);
+        Set<Class<?>> servletSet = ClassUtils.getClassWithAnnotation(classPath, Servlet.class);
         if (servletSet == null) {
             return servletConfigArrayList;
         }

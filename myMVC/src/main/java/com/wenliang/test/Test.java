@@ -8,6 +8,7 @@ import com.wenliang.context.proxy.ExecutorAspect;
 import com.wenliang.core.io.Resources;
 import com.wenliang.core.javassist.MethodParameterNamesScannerForJavassist;
 import com.wenliang.core.log.Log;
+import com.wenliang.core.util.EntityUtils;
 import com.wenliang.core.util.MethodUtils;
 import com.wenliang.core.util.StringUtils;
 import com.wenliang.mapper.sqlsession.SqlSession;
@@ -34,12 +35,17 @@ import java.util.*;
 public class Test {
 
     public static void main(String[] args) throws NoSuchMethodException, ClassNotFoundException {
-        Properties p = new Properties();
-        p.setProperty("name", "wenliang");
-        p.setProperty("password", "123456");
-        String str = "qwe#{name}qw#{password}er";
-        String s = StringUtils.convertValueToSymbol(str, "#{", "}", p);
-        System.out.println(s);
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", 12);
+        map.put("username", "wenliang");
+        map.put("password", "123");
+        map.put("birthday", new Date());
+        map.put("aaa", 12);
+        map.put("gender", null);
+        User entity =  EntityUtils.mapToEntity(map, User.class);
+        Map<String, Object> map1 = EntityUtils.entityToMap(entity);
+
+        System.out.println();
     }
 
 

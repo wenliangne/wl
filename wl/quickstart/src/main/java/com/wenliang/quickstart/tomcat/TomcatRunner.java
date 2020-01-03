@@ -160,7 +160,7 @@ public class TomcatRunner {
     }
 
     /**
-     * 加入应用监听器用于启动项目
+     * 添加监听器
      * @param context
      */
     private static void addListener(StandardContext context) {

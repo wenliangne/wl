@@ -10,13 +10,12 @@ import com.wenliang.controller.cfg.defaults.DefaultURLBuilder;
 import com.wenliang.controller.group.ExecutorBean;
 import com.wenliang.core.io.Resources;
 import com.wenliang.core.log.Log;
+import com.wenliang.core.util.ClassUtils;
 import com.wenliang.core.util.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import org.reflections.Reflections;
 
-import java.io.FileInputStream;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Set;
@@ -39,8 +38,7 @@ public class MergeDefaultURLBuilder extends DefaultURLBuilder {
         try {
             List<ExecutorCommonAspect> executorCommonAspectList = DefaultBeanApplicationContext.getExecutorCommonAspectList();
             ProxyBeanFactory proxyBeanFactory = new ProxyBeanFactory();
-            Reflections r = new Reflections(packageName);
-            Set<Class<?>> controllerList = r.getTypesAnnotatedWith(Controller.class);
+            Set<Class<?>> controllerList = ClassUtils.getClassWithAnnotation(packageName,Controller.class);
             for (Class<?> aClass : controllerList) {
                 Object o = proxyBeanFactory.createProxyBean(aClass, executorCommonAspectList);
                 if (o == null) {

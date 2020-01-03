@@ -32,7 +32,7 @@ public class SecurityFilter implements Filter {
 
     public void init(FilterConfig filterConfig) throws ServletException {
         SecurityRunner.run();
-        securityService = SecurityContext.getDefaultSecurityService();
+        securityService = SecurityContext.getSecurityService();
         matchUrlHandlerMap = SecurityContext.getMatchUrlHandlerMap();
         securityConfig = SecurityContext.getSecurityConfig();
     }
@@ -58,13 +58,6 @@ public class SecurityFilter implements Filter {
 
     /**
      * 根据url处理器处理结果进行授权及路径分发
-     * @param matchUrlHandlerList
-     * @param servletPath
-     * @param request
-     * @param response
-     * @param filterChain
-     * @throws IOException
-     * @throws ServletException
      */
     private void doDispatcher(List<MatchUrlHandler> matchUrlHandlerList,String servletPath,HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         if (isMatch(matchUrlHandlerList,servletPath)) {

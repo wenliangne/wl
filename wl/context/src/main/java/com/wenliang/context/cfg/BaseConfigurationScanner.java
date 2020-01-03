@@ -2,16 +2,13 @@ package com.wenliang.context.cfg;
 
 import com.wenliang.context.annotations.*;
 import com.wenliang.controller.cfg.defaults.DefaultControllerApplicationContext;
-import com.wenliang.core.io.Resources;
 import com.wenliang.core.log.Log;
+import com.wenliang.core.util.ClassUtils;
 import com.wenliang.core.util.MethodUtils;
 import com.wenliang.mapper.cfg.DefaultRepositoryApplicationContext;
-import com.wenliang.mapper.cfg.MapperConfiguration;
 import org.dom4j.Element;
-import org.reflections.Reflections;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,8 +31,7 @@ public class BaseConfigurationScanner {
 
     private void loadBaseToAnnotation() {
         ContextConfiguration configuration = DefaultBeanApplicationContext.getContextConfiguration();
-        Reflections r = new Reflections();
-        Set<Class<?>> configurations = r.getTypesAnnotatedWith(Configuration.class);
+        Set<Class<?>> configurations = ClassUtils.getClassWithAnnotation("", Configuration.class);
         if (configuration == null) {
             return;
         }

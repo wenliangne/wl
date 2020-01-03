@@ -4,8 +4,8 @@ import com.wenliang.context.annotations.*;
 import com.wenliang.context.cfg.DefaultBeanApplicationContext;
 import com.wenliang.context.proxy.ExecutorCommonAspect;
 import com.wenliang.core.log.Log;
+import com.wenliang.core.util.ClassUtils;
 import com.wenliang.mapper.plugins.TransactionManager;
-import org.reflections.Reflections;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -22,9 +22,8 @@ public class TransactionManagerScanner {
     public void scan(Element root) {
     }
     public void scan(String[] packageNames) {
-        Reflections r = new Reflections(packageNames);
-        Set<Class<?>> componentSet = r.getTypesAnnotatedWith(Component.class);
-        Set<Class<?>> serviceSet = r.getTypesAnnotatedWith(Service.class);
+        Set<Class<?>> componentSet = ClassUtils.getClassWithAnnotation(packageNames,Component.class);
+        Set<Class<?>> serviceSet = ClassUtils.getClassWithAnnotation(packageNames,Service.class);
         List<ExecutorCommonAspect> scanComponentSet = scan(componentSet);
         DefaultBeanApplicationContext.getExecutorCommonAspectList().addAll(scanComponentSet);
         List<ExecutorCommonAspect> scanServiceSet = scan(serviceSet);
