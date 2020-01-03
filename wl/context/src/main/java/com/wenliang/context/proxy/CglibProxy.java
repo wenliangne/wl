@@ -39,7 +39,7 @@ public class CglibProxy implements MethodInterceptor {
             if (aspectBefore != null) {
                 for (ExecutorAspect executorAspect : aspectBefore) {
                     if (executorAspect.getMatcherMethod().contains(method.toString())) {
-                        executeAspect(executorAspect, null);
+                        executeAspect(executorAspect, null,method);
                     }
                 }
             }
@@ -50,7 +50,7 @@ public class CglibProxy implements MethodInterceptor {
             if (aspectAfter != null) {
                 for (ExecutorAspect executorAspect : aspectAfter) {
                     if (executorAspect.getMatcherMethod().contains(method.toString())) {
-                        executeAspect(executorAspect, null);
+                        executeAspect(executorAspect, null,method);
                     }
                 }
             }
@@ -59,7 +59,7 @@ public class CglibProxy implements MethodInterceptor {
             if (aspectThrowing != null) {
                 for (ExecutorAspect executorAspect : aspectThrowing) {
                     if (executorAspect.getMatcherMethod().contains(method.toString())) {
-                        executeAspect(executorAspect, e);
+                        executeAspect(executorAspect, e,method);
                     }
                 }
             }
@@ -69,14 +69,14 @@ public class CglibProxy implements MethodInterceptor {
             if (aspectFinally != null) {
                 for (ExecutorAspect executorAspect : aspectFinally) {
                     if (executorAspect.getMatcherMethod().contains(method.toString())) {
-                        executeAspect(executorAspect, null);
+                        executeAspect(executorAspect, null,method);
                     }
                 }
             }
         }
         return result;
     }
-    private void executeAspect(ExecutorAspect executorAspect,Exception e) throws InvocationTargetException, IllegalAccessException {
+    private void executeAspect(ExecutorAspect executorAspect,Exception e,Method method) throws InvocationTargetException, IllegalAccessException {
         Class<?>[] parameterTypes = executorAspect.getMethod().getParameterTypes();
         Object[] args=new Object[parameterTypes.length];
         for (int i = 0; i < parameterTypes.length; i++) {
@@ -85,7 +85,7 @@ public class CglibProxy implements MethodInterceptor {
             } else if (HttpServletRequest.class.isAssignableFrom(parameterTypes[i])) {
                 Map<String, Object> map = DefaultBeanApplicationContext.getThreadLocal().get();
                 if (map == null || map.get("request") == null) {
-                    Log.ERROR("未配置Request监听器：com.wenliang.context.listener.RequestListener!");
+                    Log.WARN("无法在切面方法中注入Request对象，可能执行的方法不是一个Request请求所调用!  方法名："+method.toString()+"；也可能是未配置Request监听器！  配置类名：tomcat.listenerClassName=com.wenliang.context.listener.RequestListener!");
                     args[i] = null;
                 } else {
                     args[i]=map.get("request");

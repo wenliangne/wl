@@ -36,41 +36,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
+      <file leaf-file-name="UserDetailServiceImpl.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/service/impl/UserDetailServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="36" column="68" lean-forward="false" selection-start-line="36" selection-start-column="68" selection-end-line="36" selection-end-column="68" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="testTomcat.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/testTomcat.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="300">
               <caret line="11" column="52" lean-forward="false" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestConfiguration.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/cfg/TestConfiguration.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-286">
-              <caret line="29" column="7" lean-forward="true" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Role.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/domain/Role.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="9" column="28" lean-forward="false" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/domain/User.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="19" column="26" lean-forward="false" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -87,7 +67,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getInterfaces</find>
       <find>ResponseBody</find>
       <find>NoSuchFieldException</find>
       <find>url</find>
@@ -117,6 +96,7 @@
       <find>addlistener</find>
       <find>未配置Request监听器</find>
       <find>addl</find>
+      <find>addlis</find>
     </findStrings>
     <replaceStrings>
       <replace>setMethod</replace>
@@ -177,12 +157,12 @@
         <option value="$PROJECT_DIR$/src/main/java/com/wenliang/test/dao/RoleDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/wenliang/test/dao/UserDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/wenliang/test/domain/UserRole.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/wenliang/test/service/impl/UserDetailServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/wenliang/test/dao/UserRoleDao.java" />
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/src/main/java/com/wenliang/test/Test.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/wenliang/test/testTomcat.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/wenliang/test/cfg/TestConfiguration.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/wenliang/test/service/impl/UserDetailServiceImpl.java" />
       </list>
     </option>
   </component>
@@ -324,61 +304,6 @@
               <item name="com" type="462c0819:PsiDirectoryNode" />
               <item name="wenliang" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="cfg" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="myMVC" type="b2602c69:ProjectViewProjectNode" />
-              <item name="myMVC" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="wenliang" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="myMVC" type="b2602c69:ProjectViewProjectNode" />
-              <item name="myMVC" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="wenliang" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="myMVC" type="b2602c69:ProjectViewProjectNode" />
-              <item name="myMVC" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="wenliang" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="domain" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="myMVC" type="b2602c69:ProjectViewProjectNode" />
-              <item name="myMVC" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="wenliang" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="listener" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="myMVC" type="b2602c69:ProjectViewProjectNode" />
-              <item name="myMVC" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="wenliang" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="proxy" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -403,68 +328,6 @@
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="service" type="462c0819:PsiDirectoryNode" />
               <item name="impl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="myMVC" type="b2602c69:ProjectViewProjectNode" />
-              <item name="myMVC" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="wenliang" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="servlet" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="myMVC" type="b2602c69:ProjectViewProjectNode" />
-              <item name="myMVC" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="myMVC" type="b2602c69:ProjectViewProjectNode" />
-              <item name="myMVC" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="myMVC" type="b2602c69:ProjectViewProjectNode" />
-              <item name="myMVC" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="wenliang" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="myMVC" type="b2602c69:ProjectViewProjectNode" />
-              <item name="myMVC" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="wenliang" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="myMVC" type="b2602c69:ProjectViewProjectNode" />
-              <item name="myMVC" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="myMVC" type="b2602c69:ProjectViewProjectNode" />
-              <item name="myMVC" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -737,12 +600,12 @@
       <workItem from="1577411212358" duration="5597000" />
       <workItem from="1577953231237" duration="753000" />
       <workItem from="1577955816042" duration="3145000" />
-      <workItem from="1578016877826" duration="6053000" />
+      <workItem from="1578016877826" duration="11503000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="373577000" />
+    <option name="totallyTimeSpent" value="379027000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -766,18 +629,18 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14416847" sideWeight="0.4881757" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30357143" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297619" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2813175" sideWeight="0.55626327" order="5" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28347734" sideWeight="0.55626327" order="5" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991362" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20896329" sideWeight="0.7630597" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5511905" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -922,7 +785,7 @@
           <option name="timeStamp" value="272" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="275" />
+      <option name="time" value="276" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -945,6 +808,26 @@
       </expression>
     </expressions>
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>ServletContextListener.class.isAssignableFrom(applicationListener)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>ServletContextListener.class.isAssignableFrom(o.getClass())</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>o.getClass().isAssignableFrom(ServletContextListener.class)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>o.getClass()</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>psmt</expression-string>
         <language-id>JAVA</language-id>
@@ -970,36 +853,9 @@
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>this.securityConfig.getProperty(&quot;security.uses&quot;)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>this.securityConfig.getProperty(&quot;security.use&quot;)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>session.getAttribute(this.securityConfig.getProperty(&quot;security.use&quot;))</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>session.getAttribute(this.securityConfig.getProperty(&quot;security.use&quot;)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/com/wenliang/context/1.0.8/context-1.0.8.jar!/com/wenliang/context/annotations/AspectBefore.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="14" column="18" lean-forward="false" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/wenliang/context/1.0.8/context-1.0.8.jar!/com/wenliang/context/container/DefaultApplicationContextBuilder.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="181">
@@ -1107,13 +963,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/service/UserService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="30" column="26" lean-forward="false" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/wenliang/mapper/1.0.8/mapper-1.0.8.jar!/com/wenliang/mapper/annotations/Select.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -1141,13 +990,6 @@
         <state relative-caret-position="570">
           <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/service/impl/UserServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2100">
-          <caret line="87" column="52" lean-forward="false" selection-start-line="87" selection-start-column="52" selection-end-line="87" selection-end-column="52" />
         </state>
       </provider>
     </entry>
@@ -1215,14 +1057,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/proxy/TestAspect.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="656">
-          <caret line="32" column="59" lean-forward="false" selection-start-line="32" selection-start-column="59" selection-end-line="32" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/wenliang/core/1.0.8/core-1.0.8.jar!/com/wenliang/core/util/EntityUtils.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-117">
@@ -1281,16 +1115,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/service/impl/UserDetailServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-95">
-          <caret line="21" column="79" lean-forward="false" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="79" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/7.0.47/tomcat-embed-core-7.0.47.jar!/javax/servlet/ServletContextListener.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -1307,30 +1131,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/wenliang/context/1.0.8/context-1.0.8.jar!/com/wenliang/context/listener/RequestListener.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-153">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding>
-            <marker date="1578023684496" expanded="true" signature="0:104" ph="/.../" />
-            <marker date="1578023684496" expanded="false" signature="153:688" ph="..." />
-            <marker date="1578023684496" expanded="true" signature="784:791" ph="{}" />
-            <marker date="1578023684496" expanded="true" signature="867:939" ph="{...}" />
-            <marker date="1578023684496" expanded="true" signature="1017:2731" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/wenliang/quickstart/1.0.8/quickstart-1.0.8.jar!/com/wenliang/quickstart/application/ApplicationRunner.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
           <caret line="25" column="23" lean-forward="false" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
           <folding>
-            <marker date="1578022657717" expanded="true" signature="0:104" ph="/.../" />
-            <marker date="1578022657717" expanded="true" signature="269:276" ph="{}" />
-            <marker date="1578022657717" expanded="false" signature="312:323" ph=" { " />
-            <marker date="1578022657717" expanded="false" signature="342:348" ph=" }" />
-            <marker date="1578022657717" expanded="true" signature="399:878" ph="{...}" />
+            <marker date="1578043693224" expanded="true" signature="0:104" ph="/.../" />
+            <marker date="1578043693224" expanded="true" signature="269:276" ph="{}" />
+            <marker date="1578043693224" expanded="false" signature="312:323" ph=" { " />
+            <marker date="1578043693224" expanded="false" signature="342:348" ph=" }" />
+            <marker date="1578043693224" expanded="true" signature="399:878" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1351,48 +1161,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/wenliang/quickstart/1.0.8/quickstart-1.0.8.jar!/com/wenliang/quickstart/tomcat/TomcatRunner.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1125">
-          <caret line="57" column="63" lean-forward="false" selection-start-line="57" selection-start-column="63" selection-end-line="57" selection-end-column="63" />
-          <folding>
-            <marker date="1578022657717" expanded="false" signature="0:104" ph="/.../" />
-            <marker date="1578022657717" expanded="false" signature="154:662" ph="..." />
-            <marker date="1578022657717" expanded="true" signature="858:865" ph="{}" />
-            <marker date="1578022657717" expanded="true" signature="953:1477" ph="{...}" />
-            <marker date="1578022657717" expanded="true" signature="1508:2669" ph="{...}" />
-            <marker date="1578022657717" expanded="true" signature="2729:3525" ph="{...}" />
-            <marker date="1578022657717" expanded="true" signature="3582:3989" ph="{...}" />
-            <marker date="1578022657717" expanded="true" signature="4050:4544" ph="{...}" />
-            <marker date="1578022657717" expanded="true" signature="4607:5317" ph="{...}" />
-            <marker date="1578022657717" expanded="true" signature="5378:6594" ph="{...}" />
-            <marker date="1578022657717" expanded="true" signature="6670:7129" ph="{...}" />
-            <marker date="1578022657717" expanded="false" signature="7177:7188" ph=" { " />
-            <marker date="1578022657717" expanded="false" signature="7203:7209" ph=" }" />
-            <marker date="1578022657717" expanded="false" signature="7247:7258" ph=" { " />
-            <marker date="1578022657717" expanded="false" signature="7272:7278" ph=" }" />
-            <marker date="1578022657717" expanded="false" signature="7324:7335" ph=" { " />
-            <marker date="1578022657717" expanded="false" signature="7353:7359" ph=" }" />
-            <marker date="1578022657717" expanded="false" signature="7420:7431" ph=" { " />
-            <marker date="1578022657717" expanded="false" signature="7455:7461" ph=" }" />
-            <marker date="1578022657717" expanded="false" signature="7512:7523" ph=" { " />
-            <marker date="1578022657717" expanded="false" signature="7563:7569" ph=" }" />
-            <marker date="1578022657717" expanded="true" signature="7582:8023" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/wenliang/context/1.0.8/context-1.0.8.jar!/com/wenliang/context/listener/ContextListener.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
-            <marker date="1578023684496" expanded="true" signature="0:104" ph="/.../" />
-            <marker date="1578023684496" expanded="false" signature="153:276" ph="..." />
-            <marker date="1578023684496" expanded="true" signature="372:379" ph="{}" />
-            <marker date="1578023684496" expanded="true" signature="456:467" ph=" { " />
-            <marker date="1578023684496" expanded="true" signature="484:490" ph=" }" />
-            <marker date="1578023684496" expanded="true" signature="566:573" ph="{}" />
+            <marker date="1578042869492" expanded="true" signature="0:104" ph="/.../" />
+            <marker date="1578042869492" expanded="false" signature="153:276" ph="..." />
+            <marker date="1578042869492" expanded="true" signature="372:379" ph="{}" />
+            <marker date="1578042869492" expanded="true" signature="456:467" ph=" { " />
+            <marker date="1578042869492" expanded="true" signature="484:490" ph=" }" />
+            <marker date="1578042869492" expanded="true" signature="566:573" ph="{}" />
           </folding>
         </state>
       </provider>
@@ -1413,14 +1192,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/testTomcat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="11" column="52" lean-forward="false" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/wenliang/context/1.0.8/context-1.0.8.jar!/com/wenliang/context/annotations/Bean.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -1429,10 +1200,107 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/wenliang/context/1.0.8/context-1.0.8.jar!/com/wenliang/context/listener/RequestListener.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding>
+            <marker date="1578042869492" expanded="true" signature="0:104" ph="/.../" />
+            <marker date="1578042869492" expanded="false" signature="153:688" ph="..." />
+            <marker date="1578042869492" expanded="true" signature="784:791" ph="{}" />
+            <marker date="1578042869492" expanded="true" signature="867:939" ph="{...}" />
+            <marker date="1578042869492" expanded="true" signature="1017:2731" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/proxy/TestAspect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="31" column="48" lean-forward="false" selection-start-line="31" selection-start-column="44" selection-end-line="31" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/service/UserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="214">
+          <caret line="30" column="26" lean-forward="false" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/service/impl/UserServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1603">
+          <caret line="23" column="12" lean-forward="true" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
+          <folding>
+            <element signature="e#2423#2424#0" expanded="true" />
+            <element signature="e#2478#2479#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/wenliang/quickstart/1.0.8/quickstart-1.0.8.jar!/com/wenliang/quickstart/tomcat/TomcatRunner.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="129" column="0" lean-forward="false" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+          <folding>
+            <marker date="1578043693224" expanded="false" signature="0:104" ph="/.../" />
+            <marker date="1578043693224" expanded="false" signature="154:707" ph="..." />
+            <marker date="1578043693224" expanded="true" signature="903:910" ph="{}" />
+            <marker date="1578043693224" expanded="true" signature="998:1522" ph="{...}" />
+            <marker date="1578043693224" expanded="true" signature="1553:2714" ph="{...}" />
+            <marker date="1578043693224" expanded="true" signature="2774:3570" ph="{...}" />
+            <marker date="1578043693224" expanded="true" signature="3627:4034" ph="{...}" />
+            <marker date="1578043693224" expanded="true" signature="4095:4589" ph="{...}" />
+            <marker date="1578043693224" expanded="true" signature="4652:5629" ph="{...}" />
+            <marker date="1578043693224" expanded="true" signature="5539:5629" ph="{...}" />
+            <marker date="1578043693224" expanded="true" signature="5690:6906" ph="{...}" />
+            <marker date="1578043693224" expanded="true" signature="6982:7441" ph="{...}" />
+            <marker date="1578043693224" expanded="false" signature="7489:7500" ph=" { " />
+            <marker date="1578043693224" expanded="false" signature="7515:7521" ph=" }" />
+            <marker date="1578043693224" expanded="false" signature="7559:7570" ph=" { " />
+            <marker date="1578043693224" expanded="false" signature="7584:7590" ph=" }" />
+            <marker date="1578043693224" expanded="false" signature="7636:7647" ph=" { " />
+            <marker date="1578043693224" expanded="false" signature="7665:7671" ph=" }" />
+            <marker date="1578043693224" expanded="false" signature="7732:7743" ph=" { " />
+            <marker date="1578043693224" expanded="false" signature="7767:7773" ph=" }" />
+            <marker date="1578043693224" expanded="false" signature="7824:7835" ph=" { " />
+            <marker date="1578043693224" expanded="false" signature="7875:7881" ph=" }" />
+            <marker date="1578043693224" expanded="true" signature="7894:8335" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/proxy/TestAspect2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-100">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/cfg/TestConfiguration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-286">
-          <caret line="29" column="7" lean-forward="true" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
+        <state relative-caret-position="506">
+          <caret line="51" column="5" lean-forward="false" selection-start-line="51" selection-start-column="5" selection-end-line="51" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/testTomcat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="11" column="52" lean-forward="false" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/wenliang/test/service/impl/UserDetailServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="36" column="68" lean-forward="false" selection-start-line="36" selection-start-column="68" selection-end-line="36" selection-end-column="68" />
           <folding />
         </state>
       </provider>

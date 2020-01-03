@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
+import javax.servlet.ServletContextListener;
+import javax.servlet.ServletRequestListener;
+
 import com.wenliang.core.io.Resources;
 import com.wenliang.core.log.Log;
 
@@ -79,6 +82,7 @@ public class TomcatRunner {
         // 设置应用路径
         context.setPath(getProperty("tomcat.contextPath"));
         context.addLifecycleListener(new Tomcat.FixContextListener());
+//        new Tomcat.DefaultWebXmlListener()
         // 设置是否允许表单上传enctype="multipart/form-data"类型的数据
         context.setAllowCasualMultipartParsing(Boolean.parseBoolean(getProperty("tomcat.allowCasualMultipartParsing")));
         // 设置缓存大小
@@ -175,7 +179,12 @@ public class TomcatRunner {
                 }
                 try {
                     Class<?> applicationListener = Class.forName(listenerClassNameArr[i]);
-                    context.addApplicationLifecycleListener(applicationListener.newInstance());
+                    Object o = applicationListener.newInstance();
+                    if (ServletContextListener.class.isAssignableFrom(applicationListener)) {
+                        context.addApplicationLifecycleListener(o);
+                    } else {
+                        context.addApplicationEventListener(o);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

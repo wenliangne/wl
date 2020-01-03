@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.wenliang.context.cfg.DefaultBeanApplicationContext;
+import com.wenliang.core.util.EntityUtils;
 import com.wenliang.security.authentication.UserDetail;
 import com.wenliang.security.authentication.UserDetailsService;
 import com.wenliang.test.domain.Role;
@@ -33,13 +34,7 @@ public class UserDetailServiceImpl  implements UserDetailsService{
         UserDetail userDetail = new UserDetail();
         userDetail.setUsername(username);
         userDetail.setPassword(user.getPassword());
-        HashMap<String, Object> infoMap = new HashMap<>();
-        infoMap.put("username",user.getUsername());
-        infoMap.put("gender",user.getGender());
-        infoMap.put("birthday",user.getBirthday());
-        infoMap.put("email",user.getEmail());
-        infoMap.put("status",user.getStatus());
-        infoMap.put("id",user.getId());
+        Map<String, Object> infoMap = EntityUtils.entityToMap(user);
         userDetail.setUserInfo(infoMap);
         List<UserRole> userRoleList = userService.findByUserId(user.getId());
         ArrayList<String> roleStringList = new ArrayList<>();
