@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="com.wenliang.test.dao.UserDao">
+    <!--配置查询所有-->
+    <select id="findAll" resultType="com.wenliang.test.domain.User">
+        select * from user
+    </select>
+
+    <!--配置通过用户名和密码查询-->
+    <select id="findByUsernameAndPassword" parameterType="com.wenliang.test.domain.User" resultType="com.wenliang.test.domain.User" >
+        select * from user where username=#{username} and password=#{password}
+    </select>
+
+    <!--配置通过用户名和密码查询2-->
+    <select id="findByUsernameAndPassword2" resultType="com.wenliang.test.domain.User">
+        select * from user where username=#{username} and password=#{password}
+    </select>
+
+    <!--插入-->
+    <insert id="insert" parameterType="com.wenliang.test.domain.User" resultType="com.wenliang.test.domain.User" >
+        insert into user values(null,#{username},#{password},#{gender},#{birthday},#{email},#{status})
+    </insert>
+
+    <!--修改-->
+    <update id="update" parameterType="com.wenliang.test.domain.User" >
+        update user set password=#{password},birthday=#{birthday} where username=#{username}
+    </update>
+
+    <!--删除-->
+    <delete id="delete" parameterType="com.wenliang.test.domain.User" resultType="java.lang.Integer">
+        delete from user where username=#{username}
+    </delete>
+
+</mapper>

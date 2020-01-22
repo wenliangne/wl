@@ -24,7 +24,7 @@ public class Resources {
             Log.ERROR("File not found！");
             throw new RuntimeException("加载配置文件失败！");
         } else {
-            Log.INFO("Gets the byte stream for the configuration file!("+filePath+")");
+            Log.INFO("Gets the byte stream of the configuration file!("+filePath+")");
         }
         return resourceAsStream;
     }

@@ -18,14 +18,14 @@ public class Log {
     static {
         try {
             Properties p = new Properties();
-            p.load(Log.class.getClassLoader().getResourceAsStream("WLlog.properties"));
-            String tempLevel = p.getProperty("level");
+            p.load(Log.class.getClassLoader().getResourceAsStream("application.properties"));
+            String tempLevel = p.getProperty("log.level");
             level = tempLevel.toUpperCase();
-            String tempConsole = p.getProperty("printType");
+            String tempConsole = p.getProperty("log.printType");
             printType = tempConsole.toUpperCase();
         } catch (Exception e) {
-            System.out.println("使用默认的日志级别：INFO！");
-            System.out.println("使用默认的打印位置：CONSOLE！");
+            INFO("使用默认的日志级别：INFO！");
+            INFO("使用默认的打印位置：CONSOLE！");
         }
     }
 

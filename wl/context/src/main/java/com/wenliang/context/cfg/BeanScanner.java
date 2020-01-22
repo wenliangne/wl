@@ -143,7 +143,7 @@ public class BeanScanner {
                 bean.addProperty(property);
             }
             DefaultBeanApplicationContext.getContextConfiguration().addBean(bean);
-            ClassUtils.putValueToIntefaceAndSuper(bean.getBeanClass(),bean.getBeanName());
+            ClassUtils.putValueToInterfaceAndSuper(bean.getBeanClass(),bean.getBeanName());
 
         }
     }

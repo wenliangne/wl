@@ -66,26 +66,26 @@ public class ClassUtils {
      * @param aClass
      * @param value
      */
-    public static void putValueToIntefaceAndSuper(Class<?> aClass, String value) {
+    public static void putValueToInterfaceAndSuper(Class<?> aClass, String value) {
         DefaultBeanNameMap.put(aClass.getName(),value);
         Class<?>[] interfaces = aClass.getInterfaces();
         if (interfaces != null) {
             for (Class<?> anInterface : interfaces) {
                 DefaultBeanNameMap.put(anInterface.getName(),value);
-                putValueToIntefaceAndSuper(anInterface,value);
+                putValueToInterfaceAndSuper(anInterface,value);
             }
         }
         Class<?> superclass = aClass.getSuperclass();
         if (superclass != null) {
             DefaultBeanNameMap.put(superclass.getName(),value);
-            putValueToIntefaceAndSuper(superclass, value);
+            putValueToInterfaceAndSuper(superclass, value);
         }
 
     }
 
     public static Set<Class<?>> getClassFromPackage(String packageName) {
         Set<Class<?>> classSet = new HashSet<>();
-        File file = new File((ClassUtils.class.getResource("/").getPath() + packageName).replace(".", "/"));
+        File file = new File(ClassUtils.class.getResource("/").getPath() + packageName.replace(".", "/"));
         String basePath = file.getAbsolutePath().replace(packageName.replace(".","\\"),"");
         int baseLen = "".equals(packageName)?basePath.length()+1:basePath.length();
         List<String> fileAbsoluteNameList = FileUtils.getFileAbsoluteNameList(file, ".class");

@@ -148,7 +148,7 @@ public class BeanFactory {
             try {
                 Object invoke = method.invoke(configurationClassDomain, args);
                 context.put(method.getName(), invoke);
-                ClassUtils.putValueToIntefaceAndSuper(resultType, method.getName());
+                ClassUtils.putValueToInterfaceAndSuper(resultType, method.getName());
             } catch (Exception e) {
                 Log.ERROR("创建bean：" + method.getName() + "失败！", e);
             }
