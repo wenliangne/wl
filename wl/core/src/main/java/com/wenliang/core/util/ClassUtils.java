@@ -4,12 +4,18 @@ import com.wenliang.core.container.DefaultBeanNameMap;
 import com.wenliang.core.log.Log;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.net.JarURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * @author wenliang
@@ -83,6 +89,88 @@ public class ClassUtils {
 
     }
 
+    /**
+     * 获取jar包中的所有class
+     * @param packageName
+     * @return
+     * @throws IOException
+     */
+    public static Set<Class<?>> getClassFromJar(String packageName) throws IOException {
+        Set<Class<?>> reClassSet = new HashSet<Class<?>>();
+        //通过当前线程得到类加载器从而得到URL的枚举
+        Enumeration<URL> urlEnumeration = Thread.currentThread().getContextClassLoader().getResources(packageName.replace(".", "/"));
+        while (urlEnumeration.hasMoreElements()) {
+            URL url = urlEnumeration.nextElement();
+            String protocol = url.getProtocol();
+            if ("jar".equalsIgnoreCase(protocol)) {
+                reClassSet.addAll(scanJar(url,packageName));
+            }
+        }
+        return reClassSet;
+    }
+
+
+    /**
+     * 获取jar包和用户包下得class
+     * @param packageName
+     * @return
+     * @throws IOException
+     */
+    public static Set<Class<?>> getClassFromJarAndPackage(String packageName) throws IOException {
+        Set<Class<?>> reClassSet = new HashSet<Class<?>>();
+        //通过当前线程得到类加载器从而得到URL的枚举
+        Enumeration<URL> urlEnumeration = Thread.currentThread().getContextClassLoader().getResources(packageName.replace(".", "/"));
+        while (urlEnumeration.hasMoreElements()) {
+            URL url = urlEnumeration.nextElement();
+            String protocol = url.getProtocol();
+            if ("jar".equalsIgnoreCase(protocol)) {
+                reClassSet.addAll(scanJar(url,packageName));
+            } else if ("file".equalsIgnoreCase(protocol)) {
+                reClassSet.addAll(ClassUtils.getClassFromPackage(packageName));
+            }
+        }
+        return reClassSet;
+    }
+
+    /**
+     * 获取指定jar包url下得所有class
+     * @param url
+     * @param packageName
+     * @return
+     * @throws IOException
+     */
+    private static Set<Class<?>> scanJar(URL url,String packageName) throws IOException {
+        Set<Class<?>> reClassSet = new HashSet<Class<?>>();
+        //转换为JarURLConnection
+        JarURLConnection connection = (JarURLConnection) url.openConnection();
+        if (connection != null) {
+            JarFile jarFile = connection.getJarFile();
+            if (jarFile != null) {
+                //得到该jar文件下面的类实体
+                Enumeration<JarEntry> jarEntryEnumeration = jarFile.entries();
+                while (jarEntryEnumeration.hasMoreElements()) {
+                    JarEntry entry = jarEntryEnumeration.nextElement();
+                    String jarEntryName = entry.getName();
+                    //这里需要过滤不是class文件和不在basePack包名下的类
+                    if (jarEntryName.contains(".class") && jarEntryName.replaceAll("/",".").startsWith(packageName)) {
+                        String className = jarEntryName.substring(0, jarEntryName.lastIndexOf(".")).replace("/", ".");
+                        try {
+                            Class cls = Class.forName(className);
+                            reClassSet.add(cls);
+                        } catch (Throwable e) {
+                        }
+                    }
+                }
+            }
+        }
+        return reClassSet;
+    }
+
+    /**
+     * 获取用户包中得所有class
+     * @param packageName
+     * @return
+     */
     public static Set<Class<?>> getClassFromPackage(String packageName) {
         Set<Class<?>> classSet = new HashSet<>();
         File file = new File(ClassUtils.class.getResource("/").getPath() + packageName.replace(".", "/"));
@@ -102,9 +190,16 @@ public class ClassUtils {
         return classSet;
     }
 
-    public static Set<Class<?>> getClassWithAnnotation(String packageName, Class<? extends Annotation> annotation) {
+    /**
+     * 获取带有指定指定注解的class
+     * @param packageName
+     * @param annotation
+     * @return
+     * @throws IOException
+     */
+    public static Set<Class<?>> getClassWithAnnotation(String packageName, Class<? extends Annotation> annotation) throws IOException {
         Set<Class<?>> classSet = new HashSet<>();
-        Set<Class<?>> classFromPackage = getClassFromPackage(packageName);
+        Set<Class<?>> classFromPackage = getClassFromJarAndPackage(packageName);
         for (Class<?> aClass : classFromPackage) {
             if (aClass.getAnnotation(annotation) != null) {
                 classSet.add(aClass);
@@ -112,7 +207,15 @@ public class ClassUtils {
         }
         return classSet;
     }
-    public static Set<Class<?>> getClassWithAnnotation(String[] packageNames, Class<? extends Annotation> annotation) {
+
+    /**
+     * 获取带有指定指定注解的class
+     * @param packageNames
+     * @param annotation
+     * @return
+     * @throws IOException
+     */
+    public static Set<Class<?>> getClassWithAnnotation(String[] packageNames, Class<? extends Annotation> annotation) throws IOException {
         Set<Class<?>> classSet = new HashSet<>();
         for (int i = 0; i < packageNames.length; i++) {
             Set<Class<?>> classWithAnnotation = getClassWithAnnotation(packageNames[i], annotation);

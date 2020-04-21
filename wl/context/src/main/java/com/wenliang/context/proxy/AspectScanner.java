@@ -8,6 +8,7 @@ import com.wenliang.core.util.ClassUtils;
 
 import org.dom4j.Element;
 
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Set;
@@ -32,7 +33,12 @@ public class AspectScanner {
     }
 
     private void loadAspectToAnnotation(String[] packageNames) {
-        Set<Class<?>> classForAspect = ClassUtils.getClassWithAnnotation(packageNames,Aspect.class);
+        Set<Class<?>> classForAspect = null;
+        try {
+            classForAspect = ClassUtils.getClassWithAnnotation(packageNames,Aspect.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (classForAspect != null) {
             for (Class<?> aClass : classForAspect) {
                 Method[] declaredMethods = aClass.getDeclaredMethods();

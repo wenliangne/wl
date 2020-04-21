@@ -21,8 +21,7 @@ public class Resources {
     public static InputStream getResourceAsStream(String filePath){
         InputStream resourceAsStream = Resources.class.getClassLoader().getResourceAsStream(filePath);
         if (resourceAsStream == null) {
-            Log.ERROR("File not found！");
-            throw new RuntimeException("加载配置文件失败！");
+            Log.WARN("File not found！"+filePath);
         } else {
             Log.INFO("Gets the byte stream of the configuration file!("+filePath+")");
         }

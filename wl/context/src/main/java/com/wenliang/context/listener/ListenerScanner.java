@@ -9,6 +9,7 @@ import com.wenliang.core.util.ClassUtils;
 
 import org.dom4j.Element;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -55,7 +56,12 @@ public class ListenerScanner {
         }
     }
     private void loadListenerToAnnotation(String[] packageNames) {
-        Set<Class<?>> ls = ClassUtils.getClassWithAnnotation(packageNames,ContextListener.class);
+        Set<Class<?>> ls = null;
+        try {
+            ls = ClassUtils.getClassWithAnnotation(packageNames,ContextListener.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (ls == null) {
             return;
         }

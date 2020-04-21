@@ -20,8 +20,8 @@
       <module name="controller" target="1.8" />
       <module name="core" target="1.8" />
       <module name="mapper" target="1.8" />
-      <module name="quickstart" target="1.5" />
-      <module name="security" target="1.5" />
+      <module name="quickstart" target="1.8" />
+      <module name="security" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

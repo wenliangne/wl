@@ -8,6 +8,7 @@ import com.wenliang.core.util.MethodUtils;
 import com.wenliang.mapper.cfg.DefaultRepositoryApplicationContext;
 import org.dom4j.Element;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +32,12 @@ public class BaseConfigurationScanner {
 
     private void loadBaseToAnnotation() {
         ContextConfiguration configuration = DefaultBeanApplicationContext.getContextConfiguration();
-        Set<Class<?>> configurations = ClassUtils.getClassWithAnnotation("", Configuration.class);
+        Set<Class<?>> configurations = null;
+        try {
+            configurations = ClassUtils.getClassWithAnnotation("", Configuration.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (configuration == null) {
             return;
         }

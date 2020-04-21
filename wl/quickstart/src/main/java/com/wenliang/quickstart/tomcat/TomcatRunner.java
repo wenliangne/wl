@@ -1,5 +1,6 @@
 package com.wenliang.quickstart.tomcat;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
@@ -31,12 +32,12 @@ public class TomcatRunner {
 
     static {
         try {
-            properties.load(Resources.getResourceAsStream("quickStartDefault.properties"));
+            properties.load(TomcatRunner.class.getClassLoader().getResourceAsStream("quickStartDefault.properties"));
         } catch (IOException e) {
             Log.ERROR("加载文件:quickStartDefault.properties失败！", e);
         }
         try {
-            properties.load(Resources.getResourceAsStream("application.properties"));
+            properties.load(TomcatRunner.class.getClassLoader().getResourceAsStream("application.properties"));
         } catch (IOException e) {
             Log.ERROR("加载文件:application.properties失败！", e);
         }
@@ -78,17 +79,22 @@ public class TomcatRunner {
 
         context = new StandardContext();
         // 设置资源路径
-        context.setDocBase((System.getProperty("user.dir")+"\\src\\main\\resources\\"+getProperty("tomcat.docBase")).replace("\\","/"));
+//        String docBase = (TomcatRunner.class.getClassLoader().getResource("").getPath() + getProperty("tomcat.docBase")).replace("\\", "/");
+        context.setDocBase(getDocBase());
         // 设置应用路径
         context.setPath(getProperty("tomcat.contextPath"));
+        //设置热部署
+        context.setReloadable(Boolean.parseBoolean(getProperty("tomcat.reloadable")));
+        //new Tomcat.DefaultWebXmlListener()
         context.addLifecycleListener(new Tomcat.FixContextListener());
-//        new Tomcat.DefaultWebXmlListener()
         // 设置是否允许表单上传enctype="multipart/form-data"类型的数据
         context.setAllowCasualMultipartParsing(Boolean.parseBoolean(getProperty("tomcat.allowCasualMultipartParsing")));
         // 设置缓存大小
         context.setCacheObjectMaxSize(Integer.parseInt(getProperty("tomcat.cacheObjectMaxSize")));
         // 将context加入tomcat
         tomcat.getHost().addChild(context);
+        //添加欢迎页面
+        addWelcome(context);
         // 添加监听器
         addListener(context);
         //添加过滤器
@@ -113,11 +119,48 @@ public class TomcatRunner {
     }
 
     /**
+     * 获取资源路径
+     * @return
+     */
+    public static String getDocBase() {
+        String path = TomcatRunner.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        if (!path.contains(getProperty("tomcat.currentJarName"))) {
+            path = path.substring(0, path.lastIndexOf("/")) + File.separator;
+        } else {
+            path = TomcatRunner.class.getClassLoader().getResource("").getPath();
+        }
+        path = path + getProperty("tomcat.docBase");
+        path = path.replace("/", File.separator).replace("\\", File.separator);
+        File file = new File(path);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        return path;
+    }
+
+    /**
+     * 添加欢迎页面
+     * @param context
+     */
+    private static void addWelcome(Context context) {
+        String welcomePages = getProperty("tomcat.welcome");
+        String[] welcomePagesArr = welcomePages.split(",");
+        for (int i = 0; i < welcomePagesArr.length; i++) {
+            context.addWelcomeFile(welcomePagesArr[i]);
+        }
+    }
+
+    /**
      * 添加自定义servlet
      * @param context
      */
     private static void addCustomServlet(Context context) {
-        List<ServletConfig> servletConfigList = new ServletScanner(getProperty("tomcat.servletScannerPath")).scan();
+        List<ServletConfig> servletConfigList = null;
+        try {
+            servletConfigList = new ServletScanner(getProperty("tomcat.servletScannerPath")).scan();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         for (int i = 0; i < servletConfigList.size(); i++) {
             ServletConfig servletConfig = servletConfigList.get(i);
             Wrapper servlet = context.createWrapper();
@@ -248,28 +291,9 @@ public class TomcatRunner {
         }
     }
 
-    /**
-     * 获取context容器进行一些特殊的扩展设置
-     * @return StandardContext
-     */
-    public static StandardContext getContext() {
-        return context;
-    }
-    /**
-     * 获取tomcat容器进行一些特殊的扩展设置
-     * @return Tomcat
-     */
-    public static Tomcat getTomcat() {
-        return tomcat;
-    }
 
     public static Properties getProperties() {
         return properties;
-    }
-
-    public static void setProperties(Properties properties) {
-        TomcatRunner.properties = properties;
-
     }
 
     private static String getProperty(String key) {

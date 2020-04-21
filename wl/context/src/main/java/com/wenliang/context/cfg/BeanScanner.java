@@ -7,6 +7,7 @@ import com.wenliang.core.util.ClassUtils;
 import com.wenliang.core.util.StringUtils;
 import org.dom4j.Element;
 
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashSet;
@@ -24,7 +25,11 @@ public class BeanScanner {
     }
 
     public void scan(String[] packageNames) {
-        loadBeanAnnotation(packageNames);
+        try {
+            loadBeanAnnotation(packageNames);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -81,7 +86,7 @@ public class BeanScanner {
      * 加载注解
      * @param  packageNames
      */
-    private void loadBeanAnnotation(String[] packageNames) {
+    private void loadBeanAnnotation(String[] packageNames) throws IOException {
             Set<Class<?>> components = ClassUtils.getClassWithAnnotation(packageNames,Component.class);
             Set<Class<?>> controllers = ClassUtils.getClassWithAnnotation(packageNames,Controller.class);
             Set<Class<?>> services = ClassUtils.getClassWithAnnotation(packageNames,Service.class);

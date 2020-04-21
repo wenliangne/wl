@@ -7,6 +7,7 @@ import com.wenliang.core.log.Log;
 import com.wenliang.core.util.ClassUtils;
 import com.wenliang.mapper.plugins.TransactionManager;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -21,7 +22,7 @@ public class TransactionManagerScanner {
 
     public void scan(Element root) {
     }
-    public void scan(String[] packageNames) {
+    public void scan(String[] packageNames) throws IOException {
         Set<Class<?>> componentSet = ClassUtils.getClassWithAnnotation(packageNames,Component.class);
         Set<Class<?>> serviceSet = ClassUtils.getClassWithAnnotation(packageNames,Service.class);
         List<ExecutorCommonAspect> scanComponentSet = scan(componentSet);

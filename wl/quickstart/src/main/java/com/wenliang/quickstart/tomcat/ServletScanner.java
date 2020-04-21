@@ -1,5 +1,6 @@
 package com.wenliang.quickstart.tomcat;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +17,7 @@ import com.wenliang.core.util.StringUtils;
  */
 public class ServletScanner {
     private String classPath;
-    public List<ServletConfig> scan() {
+    public List<ServletConfig> scan() throws IOException {
         ArrayList<ServletConfig> servletConfigArrayList = new ArrayList<ServletConfig>();
         Set<Class<?>> servletSet = ClassUtils.getClassWithAnnotation(classPath, Servlet.class);
         if (servletSet == null) {

@@ -57,7 +57,11 @@ public class DefaultApplicationContextBuilder implements ApplicationContextBuild
         //扫描事务管理
         TransactionManagerScanner transactionManagerScanner = new TransactionManagerScanner();
         transactionManagerScanner.scan(root);
-        transactionManagerScanner.scan(configuration.getComponentScan());
+        try {
+            transactionManagerScanner.scan(configuration.getComponentScan());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //扫描监听器
         ListenerScanner listenerScanner = new ListenerScanner();
