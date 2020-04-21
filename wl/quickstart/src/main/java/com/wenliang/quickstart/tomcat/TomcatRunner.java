@@ -58,7 +58,7 @@ public class TomcatRunner {
             getProperties().put("tomcat.port", port);
         }
         if (contextPath != null && !"".equals(contextPath)&& !"/".equals(contextPath)) {
-            getProperties().put("contextPath.contextPath",contextPath);
+            getProperties().put("tomcat.contextPath",contextPath);
         }
         if (docBase != null && !"".equals(docBase)) {
             getProperties().put("tomcat.docBase",docBase);
