@@ -48,6 +48,7 @@ public class UserController {
     @RequestMapping("/findAll")
     public @ResponseBody
     List<User> findAll() {
+        System.out.println(request.getServerPort());
         return userService.findAll();
     }
 

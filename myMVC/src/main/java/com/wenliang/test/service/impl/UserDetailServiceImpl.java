@@ -20,16 +20,21 @@ import com.wenliang.test.service.UserService;
  * 简介：
  */
 public class UserDetailServiceImpl  implements UserDetailsService{
-    private UserService userService= (UserService)DefaultBeanApplicationContext.get("userServiceImpl");
-    private Map<String,String> roleMap = new HashMap<>();
+    private UserService userService;
+    private Map<String, String> roleMap;
     public UserDetailServiceImpl() {
-        List<Role> roleList = userService.findAllRole();
-        for (Role role : roleList) {
-            roleMap.put(String.valueOf(role.getId()), role.getRolename());
-        }
+
     }
     @Override
     public UserDetail loadUserByUsername(String username) {
+        if (roleMap == null) {
+            roleMap = new HashMap<>();
+            userService = (UserService) DefaultBeanApplicationContext.get("userServiceImpl");
+            List<Role> roleList = userService.findAllRole();
+            for (Role role : roleList) {
+                roleMap.put(String.valueOf(role.getId()), role.getRolename());
+            }
+        }
         User user = userService.findByUsername(username);
         UserDetail userDetail = new UserDetail();
         userDetail.setUsername(username);

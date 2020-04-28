@@ -41,8 +41,8 @@ public class SecurityFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String servletPath = ((HttpServletRequest) servletRequest).getServletPath();
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding(securityConfig.getProperty("security.characterEncoding"));
+        response.setContentType(securityConfig.getProperty("security.contentType"));
         //将最后访问的页面存入session
         doCache(request,servletPath);
         //处理认证相关的页面
@@ -135,6 +135,12 @@ public class SecurityFilter implements Filter {
      * @return
      */
     private boolean isMatch(List<MatchUrlHandler> matchUrlHandlerList, String url) {
+        if (url.equals(securityConfig.getProperty("security.forbidLocationPage"))
+                ||url.equals(securityConfig.getProperty("security.loginPage"))
+                ||url.equals(securityConfig.getProperty("security.loginSuccess"))
+                ||url.equals(securityConfig.getProperty("security.logoutSuccess"))) {
+            return true;
+        }
         for (MatchUrlHandler matchUrlHandler : matchUrlHandlerList) {
             if (matchUrlHandler.handle(url)) {
                 return true;
