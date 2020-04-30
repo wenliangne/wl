@@ -1,7 +1,9 @@
 package com.wenliang.security.authentication;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.relation.Role;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,12 +40,21 @@ public class DefaultSecurityService implements SecurityService {
         String username = request.getParameter(securityConfig.getProperty("security.username"));
         String password = request.getParameter(securityConfig.getProperty("security.password"));
         userDetail = userDetailsService.loadUserByUsername(username);
+        userDetail.setRole(correctionRole(userDetail.getRole()));
         try {
             if (encrypt.encrypt(password).equals(userDetail.getPassword())) {
-                session.setAttribute(securityConfig.getProperty("security.user"), userDetail);
-                session.setAttribute("username", userDetail.getUsername());
+                session.setAttribute(securityConfig.getProperty("security.sessionUserKey"), userDetail);
+                session.setAttribute(securityConfig.getProperty("security.sessionUsernameKey"), userDetail.getUsername());
                 String storyPageName = (String)session.getAttribute("storyPageName");
                 String loginSuccess = securityConfig.getProperty("security.loginSuccess");
+                List<String> role = userDetail.getRole();
+                if (role.size() > 0) {
+                    String roleName = role.get(0);
+                    String tempLoginSuccess = securityConfig.getProperty("security.loginSuccess." + roleName);
+                    if (tempLoginSuccess != null && !"".equals(tempLoginSuccess)) {
+                        loginSuccess = tempLoginSuccess;
+                    }
+                }
                 if (!"".equals(loginSuccess)) {
                     response.sendRedirect(request.getContextPath()+loginSuccess);
                 } else if (storyPageName != null && !"".equals(storyPageName)) {
@@ -63,8 +74,8 @@ public class DefaultSecurityService implements SecurityService {
 
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        session.removeAttribute(securityConfig.getProperty("security.user"));
-        session.removeAttribute("username");
+        session.removeAttribute(securityConfig.getProperty("security.sessionUserKey"));
+        session.removeAttribute(securityConfig.getProperty("security.sessionUsernameKey"));
         String storyPageName = (String)session.getAttribute("storyPageName");
         String logoutSuccess = securityConfig.getProperty("security.logoutSuccess");
         try {
@@ -83,7 +94,7 @@ public class DefaultSecurityService implements SecurityService {
     public void isLogin(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         try {
-            if (session.getAttribute("username") == null ) {
+            if (session.getAttribute(securityConfig.getProperty("security.sessionUsernameKey")) == null ) {
                 response.getOutputStream().write("false".getBytes());
             } else {
                 response.getOutputStream().write("true".getBytes());
@@ -98,7 +109,7 @@ public class DefaultSecurityService implements SecurityService {
 
         try {
             ServletOutputStream out = response.getOutputStream();
-            Object username = session.getAttribute("username");
+            Object username = session.getAttribute(securityConfig.getProperty("security.sessionUsernameKey"));
             if (username == null) {
                 out.write("null".getBytes());
             } else {
@@ -112,7 +123,7 @@ public class DefaultSecurityService implements SecurityService {
     public void isTargetRole(HttpServletRequest request, HttpServletResponse response) {
         String role = request.getParameter("role");
         HttpSession session = request.getSession();
-        UserDetail userDetail = (UserDetail) session.getAttribute(securityConfig.getProperty("security.user"));
+        UserDetail userDetail = (UserDetail) session.getAttribute(securityConfig.getProperty("security.sessionUserKey"));
         try {
             ServletOutputStream out = response.getOutputStream();
             if (userDetail == null) {
@@ -137,7 +148,7 @@ public class DefaultSecurityService implements SecurityService {
 
     public void getRoles(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        UserDetail userDetail = (UserDetail) session.getAttribute(securityConfig.getProperty("security.user"));
+        UserDetail userDetail = (UserDetail) session.getAttribute(securityConfig.getProperty("security.sessionUserKey"));
 
         try {
             ServletOutputStream out = response.getOutputStream();
@@ -160,4 +171,22 @@ public class DefaultSecurityService implements SecurityService {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 修正角色格式
+     * @param roleList
+     * @return
+     */
+    private List<String> correctionRole(List<String> roleList) {
+        List<String> reList = new ArrayList<String>();
+        for (String s : roleList) {
+            if (s.startsWith("role_")) {
+                reList.add(s);
+            } else {
+                reList.add("role_" + s);
+            }
+        }
+        return reList;
+    }
+
 }

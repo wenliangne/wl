@@ -89,7 +89,7 @@ public class SecurityFilter implements Filter {
         List<MatchUrlHandler> matchUrlHandlerList = new ArrayList<MatchUrlHandler>();
         boolean isLogin = isLogin(request);
         if (isLogin) {
-            UserDetail userDetail = (UserDetail) request.getSession().getAttribute(securityConfig.getProperty("security.user"));
+            UserDetail userDetail = (UserDetail) request.getSession().getAttribute(securityConfig.getProperty("security.sessionUserKey"));
             List<String> role = userDetail.getRole();
             for (int i = 0; i < role.size(); i++) {
                 MatchUrlHandler matchUrlHandler = matchUrlHandlerMap.get(role.get(i));
@@ -108,7 +108,7 @@ public class SecurityFilter implements Filter {
      * @return
      */
     private boolean isLogin(HttpServletRequest request) {
-        Object username = request.getSession().getAttribute("username");
+        Object username = request.getSession().getAttribute(securityConfig.getProperty("security.sessionUsernameKey"));
         if (username == null) {
             return false;
         } else {
@@ -135,10 +135,14 @@ public class SecurityFilter implements Filter {
      * @return
      */
     private boolean isMatch(List<MatchUrlHandler> matchUrlHandlerList, String url) {
-        if (url.equals(securityConfig.getProperty("security.forbidLocationPage"))
+        if (url.equals("/favicon.ico")
+                ||url.equals(securityConfig.getProperty("security.forbidLocationPage"))
                 ||url.equals(securityConfig.getProperty("security.loginPage"))
                 ||url.equals(securityConfig.getProperty("security.loginSuccess"))
-                ||url.equals(securityConfig.getProperty("security.logoutSuccess"))) {
+                ||url.equals(securityConfig.getProperty("security.logoutSuccess"))
+                ||url.equals(securityConfig.getProperty("security.loginSuccess.role_sys"))
+                ||url.equals(securityConfig.getProperty("security.loginSuccess.role_admin"))
+                ||url.equals(securityConfig.getProperty("security.loginSuccess.role_user"))) {
             return true;
         }
         for (MatchUrlHandler matchUrlHandler : matchUrlHandlerList) {
