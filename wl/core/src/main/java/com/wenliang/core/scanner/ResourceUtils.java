@@ -9,7 +9,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import org.apache.commons.lang.StringUtils;
 
-public abstract class ResourceUtils {
+public class ResourceUtils {
     public static final String CLASSPATH_URL_PREFIX = "classpath:";
     public static final String FILE_URL_PREFIX = "file:";
     public static final String JAR_URL_PREFIX = "jar:";
