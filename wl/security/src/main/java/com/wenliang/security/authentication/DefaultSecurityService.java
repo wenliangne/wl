@@ -1,7 +1,9 @@
 package com.wenliang.security.authentication;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.management.relation.Role;
 import javax.servlet.ServletOutputStream;
@@ -106,7 +108,6 @@ public class DefaultSecurityService implements SecurityService {
 
     public void getUsername(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-
         try {
             ServletOutputStream out = response.getOutputStream();
             Object username = session.getAttribute(securityConfig.getProperty("security.sessionUsernameKey"));
@@ -120,6 +121,39 @@ public class DefaultSecurityService implements SecurityService {
             e.printStackTrace();
         }
     }
+
+    public void getUserInfo(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        try {
+            response.setContentType("application/json;charset=UTF8");
+            PrintWriter writer = response.getWriter();
+            Object user = session.getAttribute(securityConfig.getProperty("security.sessionUserKey"));
+            if (user == null) {
+                writer.write("");
+            } else {
+                writer.write(mapToJsonStr((Map<String,String>) user));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 将map转换为json字符串
+     * @param map
+     * @return
+     */
+    private String mapToJsonStr(Map<String,String> map) {
+        StringBuffer sb = new StringBuffer("{");
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            sb.append("\"").append(entry.getKey()).append("\"").append(":");
+            sb.append("\"").append(entry.getValue()).append("\"");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append("}");
+        return sb.toString();
+    }
+
     public void isTargetRole(HttpServletRequest request, HttpServletResponse response) {
         String role = request.getParameter("role");
         HttpSession session = request.getSession();

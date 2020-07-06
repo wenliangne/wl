@@ -174,6 +174,9 @@ public class SecurityFilter implements Filter {
         } else if (servletPath.equals(securityConfig.getProperty("security.getUsername"))){
             securityService.getUsername(request, response);
             return true;
+        } else if (servletPath.equals(securityConfig.getProperty("security.getUserInfo"))){
+            securityService.getUserInfo(request, response);
+            return true;
         } else if (servletPath.equals(securityConfig.getProperty("security.isTargetRole"))){
             securityService.isTargetRole(request, response);
             return true;

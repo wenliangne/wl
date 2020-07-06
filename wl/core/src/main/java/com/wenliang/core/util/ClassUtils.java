@@ -26,6 +26,7 @@ public class ClassUtils {
     private ClassUtils() {
     }
 
+    private static String separator = System.getProperties().getProperty("file.separator");
     /**
      * 判断是否为复杂对象（及基本数据类型及字符串以外的对象）
      * @param parameterType
@@ -174,11 +175,11 @@ public class ClassUtils {
     public static Set<Class<?>> getClassFromPackage(String packageName) {
         Set<Class<?>> classSet = new HashSet<>();
         File file = new File(ClassUtils.class.getResource("/").getPath() + packageName.replace(".", "/"));
-        String basePath = file.getAbsolutePath().replace(packageName.replace(".","\\"),"");
+        String basePath = file.getAbsolutePath().replace(packageName.replace(".",separator),"");
         int baseLen = "".equals(packageName)?basePath.length()+1:basePath.length();
         List<String> fileAbsoluteNameList = FileUtils.getFileAbsoluteNameList(file, ".class");
         for (String fileAbsoluteName : fileAbsoluteNameList) {
-            String className = fileAbsoluteName.substring(baseLen, fileAbsoluteName.length() - 6).replace("\\", ".");
+            String className = fileAbsoluteName.substring(baseLen, fileAbsoluteName.length() - 6).replace(separator, ".");
             Class<?> aClass = null;
             try {
                 aClass = Class.forName(className);

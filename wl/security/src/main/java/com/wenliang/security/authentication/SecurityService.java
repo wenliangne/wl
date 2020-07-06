@@ -22,4 +22,6 @@ public interface SecurityService {
 
     public void getUsername(HttpServletRequest request, HttpServletResponse response);
 
+    public void getUserInfo(HttpServletRequest request, HttpServletResponse response);
+
 }

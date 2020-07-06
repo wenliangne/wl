@@ -27,21 +27,6 @@ import org.apache.catalina.startup.Tomcat;
 public class TomcatRunner {
     private static Tomcat tomcat;
     private static StandardContext context;
-    private static Properties properties=new Properties();
-
-
-    static {
-        try {
-            properties.load(TomcatRunner.class.getClassLoader().getResourceAsStream("quickStartDefault.properties"));
-        } catch (IOException e) {
-            Log.ERROR("加载文件:quickStartDefault.properties失败！", e);
-        }
-        try {
-            properties.load(TomcatRunner.class.getClassLoader().getResourceAsStream("application.properties"));
-        } catch (IOException e) {
-            Log.ERROR("加载文件:application.properties失败！", e);
-        }
-    }
 
     /**
      * 带上参数启动tomcat
@@ -52,16 +37,16 @@ public class TomcatRunner {
      */
     public static void run(String host,int port,String contextPath,String docBase) {
         if (host != null && !"".equals(host)) {
-            getProperties().put("tomcat.host",host);
+            QuickStartConfig.getProperties().put("tomcat.host",host);
         }
         if (port != 0) {
-            getProperties().put("tomcat.port", port);
+            QuickStartConfig.getProperties().put("tomcat.port", port);
         }
         if (contextPath != null && !"".equals(contextPath)&& !"/".equals(contextPath)) {
-            getProperties().put("tomcat.contextPath",contextPath);
+            QuickStartConfig.getProperties().put("tomcat.contextPath",contextPath);
         }
         if (docBase != null && !"".equals(docBase)) {
-            getProperties().put("tomcat.docBase",docBase);
+            QuickStartConfig.getProperties().put("tomcat.docBase",docBase);
         }
         run();
     }
@@ -70,27 +55,12 @@ public class TomcatRunner {
      * 启动tomcat
      */
     public static void run() {
-        tomcat = new Tomcat();
-        // 设置主机名称
-        tomcat.setHostname(getProperty("tomcat.host"));
-        // 设置端口
-        tomcat.setPort(Integer.parseInt(getProperty("tomcat.port")));
-        tomcat.setBaseDir(System.getProperty("user.dir"));
-
-        context = new StandardContext();
-        // 设置资源路径
-//        String docBase = (TomcatRunner.class.getClassLoader().getResource("").getPath() + getProperty("tomcat.docBase")).replace("\\", "/");
-        context.setDocBase(getDocBase());
-        // 设置应用路径
-        context.setPath(getProperty("tomcat.contextPath"));
-        //设置热部署
-        context.setReloadable(Boolean.parseBoolean(getProperty("tomcat.reloadable")));
-        //new Tomcat.DefaultWebXmlListener()
-        context.addLifecycleListener(new Tomcat.FixContextListener());
-        // 设置是否允许表单上传enctype="multipart/form-data"类型的数据
-        context.setAllowCasualMultipartParsing(Boolean.parseBoolean(getProperty("tomcat.allowCasualMultipartParsing")));
-        // 设置缓存大小
-        context.setCacheObjectMaxSize(Integer.parseInt(getProperty("tomcat.cacheObjectMaxSize")));
+        //添加tomcat并进行基本设置
+        addTomcatAndBasicSetting();
+        //添加context容器并进行基本设置
+        addContextAndBasicSetting();
+        // 执行扩展任务，需要实现TomcatExtension接口，并配置extensionClassName参数
+        extension(tomcat,context);
         // 将context加入tomcat
         tomcat.getHost().addChild(context);
         //添加欢迎页面
@@ -99,15 +69,12 @@ public class TomcatRunner {
         addListener(context);
         //添加过滤器
         addFilter(context);
-        // 执行扩展任务，需要实现TomcatExtension接口，并配置extensionClassName参数
-        extension(tomcat,context);
         // 添加处理jsp的servlet
         addJspServlet(context);
         // 添加自定义的servlet
         addCustomServlet(context);
         // 添加处理所有请求的servlet
         addDefaultServlet(context);
-
         try {
             // 启动tomcat
             tomcat.start();
@@ -118,18 +85,46 @@ public class TomcatRunner {
         tomcat.getServer().await();
     }
 
+    private static void addContextAndBasicSetting() {
+        StandardContext context = new StandardContext();
+        // 设置资源路径
+//        String docBase = (TomcatRunner.class.getClassLoader().getResource("").getPath() + getProperty("tomcat.docBase")).replace("\\", "/");
+        context.setDocBase(getDocBase());
+        // 设置应用路径
+        context.setPath(QuickStartConfig.getProperty("tomcat.contextPath"));
+        //设置热部署
+        context.setReloadable(Boolean.parseBoolean(QuickStartConfig.getProperty("tomcat.reloadable")));
+        //new Tomcat.DefaultWebXmlListener()
+        context.addLifecycleListener(new Tomcat.FixContextListener());
+        // 设置是否允许表单上传enctype="multipart/form-data"类型的数据
+        context.setAllowCasualMultipartParsing(Boolean.parseBoolean(QuickStartConfig.getProperty("tomcat.allowCasualMultipartParsing")));
+        // 设置缓存大小
+        context.setCacheObjectMaxSize(Integer.parseInt(QuickStartConfig.getProperty("tomcat.cacheObjectMaxSize")));
+        TomcatRunner.context = context;
+    }
+
+    private static void addTomcatAndBasicSetting() {
+        Tomcat tomcat = new Tomcat();
+        // 设置主机名称
+        tomcat.setHostname(QuickStartConfig.getProperty("tomcat.host"));
+        // 设置端口
+        tomcat.setPort(Integer.parseInt(QuickStartConfig.getProperty("tomcat.port")));
+        tomcat.setBaseDir(System.getProperty("user.dir"));
+        TomcatRunner.tomcat = tomcat;
+    }
+
     /**
      * 获取资源路径
      * @return
      */
-    public static String getDocBase() {
+    private static String getDocBase() {
         String path = TomcatRunner.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-        if (!path.contains(getProperty("tomcat.currentJarName"))) {
+        if (!path.contains(QuickStartConfig.getProperty("tomcat.currentJarName"))) {
             path = path.substring(0, path.lastIndexOf("/")) + File.separator;
         } else {
             path = TomcatRunner.class.getClassLoader().getResource("").getPath();
         }
-        path = path + getProperty("tomcat.docBase");
+        path = path + QuickStartConfig.getProperty("tomcat.docBase");
         path = path.replace("/", File.separator).replace("\\", File.separator);
         File file = new File(path);
         if (!file.exists()) {
@@ -143,7 +138,7 @@ public class TomcatRunner {
      * @param context
      */
     private static void addWelcome(Context context) {
-        String welcomePages = getProperty("tomcat.welcome");
+        String welcomePages = QuickStartConfig.getProperty("tomcat.welcome");
         String[] welcomePagesArr = welcomePages.split(",");
         for (int i = 0; i < welcomePagesArr.length; i++) {
             context.addWelcomeFile(welcomePagesArr[i]);
@@ -157,7 +152,7 @@ public class TomcatRunner {
     private static void addCustomServlet(Context context) {
         List<ServletConfig> servletConfigList = null;
         try {
-            servletConfigList = new ServletScanner(getProperty("tomcat.servletScannerPath")).scan();
+            servletConfigList = new ServletScanner(QuickStartConfig.getProperty("tomcat.servletScannerPath")).scan();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -182,7 +177,7 @@ public class TomcatRunner {
     private static void addJspServlet(Context context) {
         Wrapper jspServlet = context.createWrapper();
         jspServlet.setName("jsp");
-        jspServlet.setServletClass("org.apache.jasper.servlet.JspServlet");
+        jspServlet.setServletClass(QuickStartConfig.getProperty("tomcat.defaultJspServletClassName"));
         jspServlet.addInitParameter("fork", "false");
         jspServlet.setLoadOnStartup(3);
         context.addChild(jspServlet);
@@ -197,7 +192,7 @@ public class TomcatRunner {
     private static void addDefaultServlet(Context context) {
         Wrapper defaultServlet = context.createWrapper();
         defaultServlet.setName("default");
-        defaultServlet.setServletClass(getProperty("tomcat.defaultServletClassName"));
+        defaultServlet.setServletClass(QuickStartConfig.getProperty("tomcat.defaultServletClassName"));
         defaultServlet.addInitParameter("debug", "0");
         defaultServlet.addInitParameter("listings", "false");
         defaultServlet.setLoadOnStartup(1);
@@ -211,7 +206,7 @@ public class TomcatRunner {
      * @param context
      */
     private static void addListener(StandardContext context) {
-        String listenerClassName = getProperty("tomcat.listenerClassName");
+        String listenerClassName = QuickStartConfig.getProperty("tomcat.listenerClassName");
         if ("".equals(listenerClassName)) {
             return;
         } else {
@@ -240,7 +235,7 @@ public class TomcatRunner {
      * @param context
      */
     private static void addFilter(StandardContext context) {
-        String filterClassName = getProperty("tomcat.filterClassName");
+        String filterClassName = QuickStartConfig.getProperty("tomcat.filterClassName");
         if ("".equals(filterClassName)) {
             return;
         } else {
@@ -276,7 +271,7 @@ public class TomcatRunner {
      * @param context
      */
     private static void extension(Tomcat tomcat,StandardContext context) {
-        String extensionClassName = getProperty("tomcat.extensionClassName");
+        String extensionClassName = QuickStartConfig.getProperty("tomcat.extensionClassName");
         if ("".equals(extensionClassName)) {
             return;
         } else {
@@ -291,14 +286,6 @@ public class TomcatRunner {
         }
     }
 
-
-    public static Properties getProperties() {
-        return properties;
-    }
-
-    private static String getProperty(String key) {
-        return getProperties().getProperty(key);
-    }
 
 
 }
